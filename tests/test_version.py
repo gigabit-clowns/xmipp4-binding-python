@@ -20,36 +20,10 @@
 #  e-mail address 'xmipp@cnb.csic.es'
 # ***************************************************************************
 
-cmake_minimum_required(VERSION 3.16)
+import xmipp4
 
-# Define the project
-project(
-  xmipp4-binding-python
-	VERSION 0.1.0 
-	LANGUAGES C CXX
-)
-
-# Include CTest to provide BUILD_TESTING option
-include(CTest)
-
-# Declare build options
-#option(XMIPP4_BINDING_PYTHON_BUILD_DOC "Build documentation" ON)
-
-# Set the module path
-#list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
-
-# Add sources
-add_subdirectory(src)
-
-# Only build docs if it is the main project
-#if(BUILD_DOC)
-#	add_subdirectory(doc)
-#endif()
-
-# Only build tests if it is the main project
-if(BUILD_TESTING)
-	find_package(Python COMPONENTS Interpreter REQUIRED)
-	add_test(NAME ${PROJECT_NAME}_tests
-			COMMAND ${Python_EXECUTABLE} -m pytest ${CMAKE_CURRENT_SOURCE_DIR}
-	)
-endif()
+def test_version_constructor():
+    v = xmipp4.version(1234, 567, 890)
+    assert v.major == 1234
+    assert v.minor == 567
+    assert v.patch == 890
