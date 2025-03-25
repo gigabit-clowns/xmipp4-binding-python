@@ -1,4 +1,5 @@
 
+#include "compute/init.hpp"
 #include "version.hpp"
 
 #include <pybind11/pybind11.h>
@@ -18,6 +19,9 @@ static std::string version_to_string(version ver)
 
 PYBIND11_MODULE(_core, m) {
     m.attr("__version__") = version_to_string(get_core_version());
+
+    auto compute_module = m.def_submodule("compute");
+    compute::init(compute_module);
 
     register_version(m);
 }

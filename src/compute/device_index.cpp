@@ -18,9 +18,9 @@
  *  e-mail address 'xmipp@cnb.csic.es'
  ***************************************************************************/
 
-#include "location.hpp"
+#include "device_index.hpp"
 
-#include <xmipp4/core/image/location.hpp>
+#include <xmipp4/core/compute/device_index.hpp>
 
 #include <pybind11/operators.h>
 
@@ -28,36 +28,35 @@
 
 namespace xmipp4
 {
-namespace image
+namespace compute
 {
 
 namespace py = pybind11;
 
-static std::string to_string(const location &l)
+static std::string to_string(const device_index &l)
 {
     std::ostringstream oss;
     oss << l;
     return oss.str();
 }
 
-static location from_string(const std::string &str)
+static device_index from_string(const std::string &str)
 {
-    location result;
-    if (!parse_location(str, result))
+    device_index result;
+    if (!parse_device_index(str, result))
     {
-        throw std::invalid_argument("Invalid image location syntax: " + str);
+        throw std::invalid_argument("Invalid device_index syntax: " + str);
     }
     return result;
 }
 
 
 
-void register_version(pybind11::module_ &m)
+void register_device_index(pybind11::module_ &m)
 {
-    py::class_<location>(m, "version")
-        .def(py::init<py::str, py::int_>())
+    py::class_<device_index>(m, "device_index")
+        .def(py::init<py::str, py::size_t>())
         .def(py::init(&from_string))
-        .def_property_readonly_static("NO_POSITION", [] (py::object /*self*/) { return location::no_position; })
         .def(py::self == py::self)
         .def(py::self != py::self)
         .def(py::self < py::self)
@@ -65,28 +64,26 @@ void register_version(pybind11::module_ &m)
         .def(py::self > py::self)
         .def(py::self >= py::self)
         .def("__str__", &to_string)
-        .def_property("filename", &location::get_filename, &location::set_filename<std::string>)
-        .def_property("position", &location::get_position, &location::set_position)
+        .def_property_readonly("backend", &device_index::get_backend_name)
+        .def_property_readonly("id", &device_index::get_device_id)
         .def(py::pickle(
-            [](const location &l) -> pybind11::tuple // __getstate__
+            [](const device_index &l) -> pybind11::tuple // __getstate__
             {
                 return py::make_tuple(
-                    l.get_filename(), 
-                    l.get_position() 
+                    l.get_backend_name(), 
+                    l.get_device_id() 
                 );
             },
-            [](py::tuple t) -> location  // __setstate__
+            [](py::tuple t) -> device_index  // __setstate__
             {
-                return location(
+                return device_index(
                     t[0].cast<std::string>(),
-                    t[1].cast<int>()
+                    t[1].cast<std::size_t>()
                 );
             }
         ));
 
-    m.def("has_position", &has_position);
-    m.def("is_contiguous", &is_contiguous);
 }
 
-} // namespace image
+} // namespace compute
 } // namespace xmipp4
