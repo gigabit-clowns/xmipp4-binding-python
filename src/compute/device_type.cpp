@@ -18,13 +18,9 @@
  *  e-mail address 'xmipp@cnb.csic.es'
  ***************************************************************************/
 
-#include "init.hpp"
-
-#include "device_create_parameters.hpp"
-#include "device_index.hpp"
-#include "device_manager.hpp"
-#include "device_properties.hpp"
 #include "device_type.hpp"
+
+#include <xmipp4/core/compute/device_type.hpp>
 
 namespace xmipp4
 {
@@ -33,14 +29,22 @@ namespace compute
 
 namespace py = pybind11;
 
-void init(pybind11::module_ &m)
+static void add_value(py::enum_<device_type> &e, device_type value)
 {
-    register_device_create_parameters(m);
-    register_device_index(m);
-    register_device_manager(m);
-    register_device_properties(m);
-    register_device_type(m);
+    e.value(to_string(value), value);
 }
+
+
+void register_device_type(pybind11::module_ &m)
+{
+    auto enumeration = py::enum_<device_type>(m, "device_type");
+    add_value(enumeration, device_type::unknown);
+    add_value(enumeration, device_type::cpu);
+    add_value(enumeration, device_type::gpu);
+    add_value(enumeration, device_type::integrated_gpu);
+    add_value(enumeration, device_type::fpga);
+}
+
 
 } // namespace compute
 } // namespace xmipp4

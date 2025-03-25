@@ -18,13 +18,9 @@
  *  e-mail address 'xmipp@cnb.csic.es'
  ***************************************************************************/
 
-#include "init.hpp"
-
 #include "device_create_parameters.hpp"
-#include "device_index.hpp"
-#include "device_manager.hpp"
-#include "device_properties.hpp"
-#include "device_type.hpp"
+
+#include <xmipp4/core/compute/device_create_parameters.hpp>
 
 namespace xmipp4
 {
@@ -33,13 +29,30 @@ namespace compute
 
 namespace py = pybind11;
 
-void init(pybind11::module_ &m)
+void register_device_create_parameters(pybind11::module_ &m)
 {
-    register_device_create_parameters(m);
-    register_device_index(m);
-    register_device_manager(m);
-    register_device_properties(m);
-    register_device_type(m);
+    py::class_<device_create_parameters>(m, "device_create_parameters")
+        .def(py::init<>())
+        .def_property(
+            "desired_queue_count", 
+            &device_create_parameters::get_desired_queue_count, 
+            &device_create_parameters::set_desired_queue_count
+        )
+        .def(py::pickle(
+            [](const device_create_parameters &l) -> pybind11::tuple // __getstate__
+            {
+                return py::make_tuple(
+                    l.get_desired_queue_count()
+                );
+            },
+            [](py::tuple t) -> device_create_parameters  // __setstate__
+            {
+                device_create_parameters result;
+                result.set_desired_queue_count(t[0].cast<std::size_t>());
+                return result;
+            }
+        ));
+
 }
 
 } // namespace compute
