@@ -45,7 +45,11 @@ static location from_string(const std::string &str)
     location result;
     if (!parse_location(str, result))
     {
-        throw std::invalid_argument("Invalid image location syntax: " + str);
+        std::ostringstream oss;
+        oss << "Invalid image location syntax \"" << str << "\"\n"
+            << "Expected syntax \"position_in_stack@path_to_stack\" "
+            << "or \"path_to_stack\"";
+        throw std::invalid_argument(oss.str());
     }
     return result;
 }
