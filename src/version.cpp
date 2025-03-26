@@ -50,7 +50,10 @@ static std::string to_repr(const version &v)
 void bind_version(pybind11::module_ &m)
 {
     py::class_<version>(m, "version")
-        .def(py::init<py::int_, py::int_, py::int_>())
+        .def(
+            py::init<py::int_, py::int_, py::int_>(), 
+            py::arg("major"), py::arg("minor"), py::arg("patch")
+    )
         .def(py::self == py::self)
         .def(py::self != py::self)
         .def(py::self < py::self)

@@ -40,6 +40,14 @@ static std::string to_string(const location &l)
     return oss.str();
 }
 
+static std::string to_repr(const location &l)
+{
+    std::ostringstream oss;
+    oss << "location(filename=\"" << l.get_filename() << "\", " 
+        << "position=" << l.get_position() << ")";
+    return oss.str();
+}
+
 static location from_string(const std::string &str)
 {
     location result;
@@ -59,7 +67,7 @@ static location from_string(const std::string &str)
 void bind_location(pybind11::module_ &m)
 {
     py::class_<location>(m, "location")
-        .def(py::init<py::str, py::int_>())
+        .def(py::init<py::str, py::int_>(), py::arg("filename"), py::arg("position"))
         .def(py::init(&from_string))
         .def_property_readonly_static("NO_POSITION", [] (py::object /*self*/) { return location::no_position; })
         .def(py::self == py::self)
@@ -83,7 +91,7 @@ void bind_location(pybind11::module_ &m)
             {
                 return location(
                     t[0].cast<std::string>(),
-                    t[1].cast<int>()
+                    t[1].cast<std::size_t>()
                 );
             }
         ));
