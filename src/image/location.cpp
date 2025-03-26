@@ -56,9 +56,9 @@ static location from_string(const std::string &str)
 
 
 
-void bind_version(pybind11::module_ &m)
+void bind_location(pybind11::module_ &m)
 {
-    py::class_<location>(m, "version")
+    py::class_<location>(m, "location")
         .def(py::init<py::str, py::int_>())
         .def(py::init(&from_string))
         .def_property_readonly_static("NO_POSITION", [] (py::object /*self*/) { return location::no_position; })
