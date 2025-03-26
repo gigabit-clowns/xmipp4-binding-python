@@ -21,6 +21,8 @@
 #include "device_manager.hpp"
 
 #include <xmipp4/core/compute/device_manager.hpp>
+#include <xmipp4/core/compute/device_create_parameters.hpp>
+#include <xmipp4/core/compute/device.hpp>
 #include <xmipp4/core/compute/host/host_device_backend.hpp> // TODO remove
 
 #include <pybind11/stl.h> // Required for std::vector binding
