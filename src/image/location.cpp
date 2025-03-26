@@ -67,9 +67,18 @@ static location from_string(const std::string &str)
 void bind_location(pybind11::module_ &m)
 {
     py::class_<location>(m, "Location")
-        .def(py::init<py::str, py::int_>(), py::arg("filename"), py::arg("position"))
+        .def(
+            py::init<py::str, py::int_>(), 
+            py::arg("filename"), py::arg("position")
+        )
         .def(py::init(&from_string))
-        .def_property_readonly_static("NO_POSITION", [] (py::object /*self*/) { return location::no_position; })
+        .def_property_readonly_static(
+            "NO_POSITION", 
+            [] (py::object /*self*/) -> std::size_t
+            { 
+                return location::no_position; 
+            }
+        )
         .def(py::self == py::self)
         .def(py::self != py::self)
         .def(py::self < py::self)
@@ -78,8 +87,16 @@ void bind_location(pybind11::module_ &m)
         .def(py::self >= py::self)
         .def("__str__", &to_string)
         .def("__repr__", &to_repr)
-        .def_property("filename", &location::get_filename, &location::set_filename<std::string>)
-        .def_property("position", &location::get_position, &location::set_position)
+        .def_property(
+            "filename", 
+            &location::get_filename, 
+            &location::set_filename<std::string>
+        )
+        .def_property(
+            "position", 
+            &location::get_position, 
+            &location::set_position
+        )
         .def(py::pickle(
             [](const location &l) -> pybind11::tuple // __getstate__
             {
