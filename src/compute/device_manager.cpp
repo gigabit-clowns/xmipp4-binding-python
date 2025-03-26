@@ -86,7 +86,6 @@ void bind_device_manager(pybind11::module_ &m)
                 return result;
             }
         );
-        // TODO get backend 
 
     m.def("register_host_backend", &host_device_backend::register_at); // TODO remove
 
