@@ -77,6 +77,7 @@ void bind_location(pybind11::module_ &m)
         .def(py::self > py::self)
         .def(py::self >= py::self)
         .def("__str__", &to_string)
+        .def("__repr__", &to_repr)
         .def_property("filename", &location::get_filename, &location::set_filename<std::string>)
         .def_property("position", &location::get_position, &location::set_position)
         .def(py::pickle(
