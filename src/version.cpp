@@ -41,7 +41,7 @@ static std::string to_string(const version &v)
 static std::string to_repr(const version &v)
 {
     std::ostringstream oss;
-    oss << "version(major=" << v.get_major() << ", "
+    oss << "Version(major=" << v.get_major() << ", "
         << "minor=" << v.get_minor() << ", "
         << "patch=" << v.get_patch() << ")";
     return oss.str();
