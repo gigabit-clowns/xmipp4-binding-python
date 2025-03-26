@@ -35,6 +35,8 @@ jobs:
       - name: Install xmipp4-core
         id: install-xmipp4-core
         uses: ./.github/composites/install-xmipp4-core
+        with:
+          ref: olz_bugfix # TODO remove
       
       - name: Configure and build with CMake
         uses: threeal/cmake-action@v2
