@@ -35,7 +35,7 @@ static void add_value(py::enum_<device_type> &e, device_type value)
 }
 
 
-void register_device_type(pybind11::module_ &m)
+void bind_device_type(pybind11::module_ &m)
 {
     auto enumeration = py::enum_<device_type>(m, "device_type");
     add_value(enumeration, device_type::unknown);

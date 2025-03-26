@@ -27,7 +27,7 @@ namespace xmipp4
 namespace compute
 {
 
-void register_device_properties(pybind11::module_ &m);
+void bind_device_properties(pybind11::module_ &m);
 
 } // namespace compute
 } // namespace xmipp4

@@ -34,7 +34,7 @@ namespace compute
 
 namespace py = pybind11;
 
-void register_device_manager(pybind11::module_ &m)
+void bind_device_manager(pybind11::module_ &m)
 {
     py::class_<device_manager>(m, "device_manager")
         .def(py::init<>())

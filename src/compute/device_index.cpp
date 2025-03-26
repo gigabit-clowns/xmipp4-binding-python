@@ -43,8 +43,8 @@ static std::string to_string(const device_index &l)
 static std::string to_repr(const device_index &l)
 {
     std::ostringstream oss;
-    oss << "device_index(\"" << l.get_backend_name() << "\", " 
-        << l.get_device_id() << ")";
+    oss << "device_index(backend=\"" << l.get_backend_name() << "\", " 
+        << "id=" << l.get_device_id() << ")";
     return oss.str();
 }
 
@@ -63,7 +63,7 @@ static device_index from_string(const std::string &str)
 
 
 
-void register_device_index(pybind11::module_ &m)
+void bind_device_index(pybind11::module_ &m)
 {
     py::class_<device_index>(m, "device_index")
         .def(py::init<py::str, py::size_t>(), py::arg("backend"), py::arg("id"))

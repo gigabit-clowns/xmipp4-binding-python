@@ -29,7 +29,7 @@ namespace compute
 
 namespace py = pybind11;
 
-void register_device_properties(pybind11::module_ &m)
+void bind_device_properties(pybind11::module_ &m)
 {
     py::class_<device_properties>(m, "device_properties")
         .def(py::init<>())

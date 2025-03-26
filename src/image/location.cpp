@@ -56,7 +56,7 @@ static location from_string(const std::string &str)
 
 
 
-void register_version(pybind11::module_ &m)
+void bind_version(pybind11::module_ &m)
 {
     py::class_<location>(m, "version")
         .def(py::init<py::str, py::int_>())

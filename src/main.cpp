@@ -1,5 +1,7 @@
 
-#include "compute/init.hpp"
+#include "compute/main.hpp"
+#include "image/main.hpp"
+
 #include "version.hpp"
 
 #include <pybind11/pybind11.h>
@@ -21,7 +23,9 @@ PYBIND11_MODULE(_core, m) {
     m.attr("__version__") = version_to_string(get_core_version());
 
     auto compute_module = m.def_submodule("compute");
-    compute::init(compute_module);
+    compute::bind_compute(compute_module);
+    auto image_module = m.def_submodule("image");
+    image::bind_image(image_module);
 
-    register_version(m);
+    bind_version(m);
 }

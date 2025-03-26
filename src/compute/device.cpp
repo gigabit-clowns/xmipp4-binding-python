@@ -37,7 +37,7 @@ namespace compute
 
 namespace py = pybind11;
 
-void register_device(pybind11::module_ &m)
+void bind_device(pybind11::module_ &m)
 {
     py::class_<device, std::shared_ptr<device>>(m, "device")
         .def("get_queue_pool", &device::get_queue_pool)
