@@ -65,7 +65,7 @@ static device_index from_string(const std::string &str)
 
 void bind_device_index(pybind11::module_ &m)
 {
-    py::class_<device_index>(m, "device_index")
+    py::class_<device_index>(m, "DeviceIndex")
         .def(py::init<py::str, py::size_t>(), py::arg("backend"), py::arg("id"))
         .def(py::init(&from_string))
         .def(py::self == py::self)

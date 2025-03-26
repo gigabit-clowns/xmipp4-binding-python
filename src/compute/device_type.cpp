@@ -37,7 +37,7 @@ static void add_value(py::enum_<device_type> &e, device_type value)
 
 void bind_device_type(pybind11::module_ &m)
 {
-    auto enumeration = py::enum_<device_type>(m, "device_type");
+    auto enumeration = py::enum_<device_type>(m, "DeviceType");
     add_value(enumeration, device_type::unknown);
     add_value(enumeration, device_type::cpu);
     add_value(enumeration, device_type::gpu);

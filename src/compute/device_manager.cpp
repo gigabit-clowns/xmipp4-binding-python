@@ -36,7 +36,7 @@ namespace py = pybind11;
 
 void bind_device_manager(pybind11::module_ &m)
 {
-    py::class_<device_manager>(m, "device_manager")
+    py::class_<device_manager>(m, "DeviceManager")
         .def(py::init<>())
         .def(
             "enumerate_backends", 

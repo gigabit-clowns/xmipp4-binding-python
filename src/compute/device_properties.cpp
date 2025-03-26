@@ -31,7 +31,7 @@ namespace py = pybind11;
 
 void bind_device_properties(pybind11::module_ &m)
 {
-    py::class_<device_properties>(m, "device_properties")
+    py::class_<device_properties>(m, "DeviceProperties")
         .def(py::init<>())
         .def_property(
             "type", 
