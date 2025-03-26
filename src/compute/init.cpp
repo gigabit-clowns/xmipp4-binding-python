@@ -20,7 +20,6 @@
 
 #include "init.hpp"
 
-#include "device_create_parameters.hpp"
 #include "device_index.hpp"
 #include "device_manager.hpp"
 #include "device_properties.hpp"
@@ -36,7 +35,6 @@ namespace py = pybind11;
 
 void init(pybind11::module_ &m)
 {
-    register_device_create_parameters(m);
     register_device_index(m);
     register_device_manager(m);
     register_device_properties(m);

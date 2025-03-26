@@ -40,7 +40,8 @@ void register_device_manager(pybind11::module_ &m)
         .def(py::init<>())
         .def(
             "enumerate_backends", 
-            [](device_manager &self) -> std::vector<std::string> {
+            [](device_manager &self) -> std::vector<std::string> 
+            {
                 std::vector<std::string> backends;
                 self.enumerate_backends(backends);
                 return backends;
@@ -48,7 +49,8 @@ void register_device_manager(pybind11::module_ &m)
         )
         .def(
             "enumerate_devices", 
-            [](device_manager &self) -> std::vector<device_index> {
+            [](device_manager &self) -> std::vector<device_index> 
+            {
                 std::vector<device_index> indices;
                 self.enumerate_devices(indices);
                 return indices;
@@ -56,7 +58,8 @@ void register_device_manager(pybind11::module_ &m)
         )
         .def(
             "get_device_properties", 
-            [](device_manager &self, const device_index &index) -> device_properties {
+            [](device_manager &self, const device_index &index) -> device_properties 
+            {
                 device_properties desc;
                 if(!self.get_device_properties(index, desc)) {
                     throw std::invalid_argument("Requested device does not exist.");
@@ -64,7 +67,25 @@ void register_device_manager(pybind11::module_ &m)
                 return desc;
             }
         )
-        .def("create_device", &device_manager::create_device);
+        .def(
+            "create_device", 
+            [] (device_manager &self, 
+                const device_index& index, 
+                const py::kwargs &kwargs ) -> std::shared_ptr<device> 
+            {
+                std::shared_ptr<device> result;
+                device_create_parameters params;
+                if(kwargs.contains("desired_queue_count")) {
+                    params.set_desired_queue_count(kwargs["desired_queue_count"].cast<std::size_t>());
+                }
+
+                if(!(result = self.create_device(index, params))) {
+                    throw std::invalid_argument("Requested device does not exist.");
+                }
+
+                return result;
+            }
+        );
         // TODO get backend 
 
     m.def("register_host_backend", &host_device_backend::register_at); // TODO remove

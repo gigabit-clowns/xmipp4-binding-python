@@ -75,7 +75,7 @@ void register_device_index(pybind11::module_ &m)
         .def(py::self > py::self)
         .def(py::self >= py::self)
         .def("__str__", &to_string)
-        .def("__repr_", &to_repr)
+        .def("__repr__", &to_repr)
         .def_property_readonly("backend", &device_index::get_backend_name)
         .def_property_readonly("id", &device_index::get_device_id)
         .def(py::pickle(
