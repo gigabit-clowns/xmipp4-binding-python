@@ -34,8 +34,9 @@ jobs:
 
       - name: Install xmipp4-core
         id: install-xmipp4-core
-        ref: olz_spdlog_bug
         uses: ./.github/composites/install-xmipp4-core
+        with:
+          ref: olz_spdlog_bug
       
       - name: Configure and build with CMake
         uses: threeal/cmake-action@v2
