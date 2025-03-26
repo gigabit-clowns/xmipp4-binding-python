@@ -1,5 +1,3 @@
-#pragma once
-
 /***************************************************************************
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,11 +18,21 @@
  *  e-mail address 'xmipp@cnb.csic.es'
  ***************************************************************************/
 
-#include <pybind11/pybind11.h>
+#include "main.hpp"
+
+#include "location.hpp"
 
 namespace xmipp4
 {
+namespace image
+{
 
-void bind_version(pybind11::module_ &m);
+namespace py = pybind11;
 
+void bind_image(pybind11::module_ &m)
+{
+    bind_location(m);
+}
+
+} // namespace compute
 } // namespace xmipp4

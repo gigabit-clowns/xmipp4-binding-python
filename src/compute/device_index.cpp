@@ -18,42 +18,56 @@
  *  e-mail address 'xmipp@cnb.csic.es'
  ***************************************************************************/
 
-#include "version.hpp"
+#include "device_index.hpp"
 
-#include <xmipp4/core/version.hpp>
-
-#include <sstream>
+#include <xmipp4/core/compute/device_index.hpp>
 
 #include <pybind11/operators.h>
 
+#include <sstream>
+
 namespace xmipp4
+{
+namespace compute
 {
 
 namespace py = pybind11;
 
-static std::string to_string(const version &v)
+static std::string to_string(const device_index &l)
 {
     std::ostringstream oss;
-    oss << v;
+    oss << l;
     return oss.str();
 }
 
-static std::string to_repr(const version &v)
+static std::string to_repr(const device_index &l)
 {
     std::ostringstream oss;
-    oss << "Version(major=" << v.get_major() << ", "
-        << "minor=" << v.get_minor() << ", "
-        << "patch=" << v.get_patch() << ")";
+    oss << "DeviceIndex(backend=\"" << l.get_backend_name() << "\", " 
+        << "id=" << l.get_device_id() << ")";
     return oss.str();
 }
 
-void bind_version(pybind11::module_ &m)
+static device_index from_string(const std::string &str)
 {
-    py::class_<version>(m, "Version")
-        .def(
-            py::init<py::int_, py::int_, py::int_>(), 
-            py::arg("major"), py::arg("minor"), py::arg("patch")
-    )
+    device_index result;
+    if (!parse_device_index(str, result))
+    {
+        std::ostringstream oss;
+        oss << "Invalid device_index syntax \"" << str << "\"\n"
+            << "Expected syntax \"backend_name:device_id\" or \"backend_name\"";
+        throw std::invalid_argument(oss.str());
+    }
+    return result;
+}
+
+
+
+void bind_device_index(pybind11::module_ &m)
+{
+    py::class_<device_index>(m, "DeviceIndex")
+        .def(py::init<py::str, py::size_t>(), py::arg("backend"), py::arg("id"))
+        .def(py::init(&from_string))
         .def(py::self == py::self)
         .def(py::self != py::self)
         .def(py::self < py::self)
@@ -62,27 +76,26 @@ void bind_version(pybind11::module_ &m)
         .def(py::self >= py::self)
         .def("__str__", &to_string)
         .def("__repr__", &to_repr)
-        .def_property("major", &version::get_major, &version::set_major)
-        .def_property("minor", &version::get_minor, &version::set_minor)
-        .def_property("patch", &version::get_patch, &version::set_patch)
+        .def_property_readonly("backend", &device_index::get_backend_name)
+        .def_property_readonly("id", &device_index::get_device_id)
         .def(py::pickle(
-            [](const version &v) // __getstate__
+            [](const device_index &l) -> pybind11::tuple // __getstate__
             {
                 return py::make_tuple(
-                    v.get_major(), 
-                    v.get_minor(), 
-                    v.get_patch()
+                    l.get_backend_name(), 
+                    l.get_device_id() 
                 );
             },
-            [](py::tuple t) -> version  // __setstate__
+            [](py::tuple t) -> device_index  // __setstate__
             {
-                return version(
-                    t[0].cast<int>(),
-                    t[1].cast<int>(),
-                    t[2].cast<int>()
+                return device_index(
+                    t[0].cast<std::string>(),
+                    t[1].cast<std::size_t>()
                 );
             }
         ));
+
 }
 
+} // namespace compute
 } // namespace xmipp4

@@ -24,7 +24,10 @@
 
 namespace xmipp4
 {
+namespace image
+{
 
-void bind_version(pybind11::module_ &m);
+void bind_image(pybind11::module_ &m);
 
+} // namespace compute
 } // namespace xmipp4
