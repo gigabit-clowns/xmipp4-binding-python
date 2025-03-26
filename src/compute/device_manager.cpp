@@ -87,8 +87,6 @@ void bind_device_manager(pybind11::module_ &m)
             }
         );
 
-    m.def("register_host_backend", &host_device_backend::register_at); // TODO remove
-
 }
 
 } // namespace compute
