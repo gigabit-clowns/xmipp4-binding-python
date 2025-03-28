@@ -18,30 +18,26 @@
  *  e-mail address 'xmipp@cnb.csic.es'
  ***************************************************************************/
 
-#include "interface_registry.hpp"
+#include "communicator.hpp"
 
-#include <xmipp4/core/interface_registry.hpp>
-
-#include <xmipp4/core/plugin_manager.hpp>
+#include <xmipp4/core/communication/communicator.hpp>
 
 namespace xmipp4
+{
+namespace communication
 {
 
 namespace py = pybind11;
 
-void bind_interface_registry(pybind11::module_ &m)
+void bind_communicator(pybind11::module_ &m)
 {
-    py::class_<interface_registry>(m, "InterfaceRegistry")
-        .def(py::init<bool>(), py::arg("register_builtin_backends") = true)
-        .def(
-            "register_plugins", 
-            [](interface_registry &registry, const plugin_manager &manager) 
-            {
-                return register_all_plugins_at(manager, registry);
-            },
-            py::keep_alive<1, 2>() // Do not destroy the manager before the registry
-        );
+    py::class_<communicator, std::shared_ptr<communicator>>(m, "Communicator")
+        .def_property_readonly("rank", &communicator::get_rank)
+        .def_property_readonly("size", &communicator::get_size)
+        .def("split", &communicator::split, py::arg("color"), py::arg("key"))
+        .def("barrier", &communicator::barrier);
 
 }
 
+} // namespace communication
 } // namespace xmipp4
