@@ -1,3 +1,5 @@
+#pragma once
+
 /***************************************************************************
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,37 +20,14 @@
  *  e-mail address 'xmipp@cnb.csic.es'
  ***************************************************************************/
 
-#include "main.hpp"
-
-#include "device.hpp"
-#include "device_event.hpp"
-#include "device_index.hpp"
-#include "device_manager.hpp"
-#include "device_properties.hpp"
-#include "device_queue.hpp"
-#include "device_queue_pool.hpp"
-#include "device_to_host_event.hpp"
-#include "device_type.hpp"
+#include <pybind11/pybind11.h>
 
 namespace xmipp4
 {
 namespace compute
 {
 
-namespace py = pybind11;
-
-void bind_compute(pybind11::module_ &m)
-{
-    bind_device(m);
-    bind_device_event(m);
-    bind_device_index(m);
-    bind_device_manager(m);
-    bind_device_properties(m);
-    bind_device_queue(m);
-    bind_device_queue_pool(m);
-    bind_device_to_host_event(m);
-    bind_device_type(m);
-}
+void bind_device_to_host_event(pybind11::module_ &m);
 
 } // namespace compute
 } // namespace xmipp4
