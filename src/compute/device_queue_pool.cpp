@@ -18,17 +18,12 @@
  *  e-mail address 'xmipp@cnb.csic.es'
  ***************************************************************************/
 
-#include "main.hpp"
-
-#include "device.hpp"
-#include "device_event.hpp"
-#include "device_index.hpp"
-#include "device_manager.hpp"
-#include "device_properties.hpp"
-#include "device_queue.hpp"
 #include "device_queue_pool.hpp"
-#include "device_to_host_event.hpp"
-#include "device_type.hpp"
+
+#include <xmipp4/core/compute/device_queue.hpp>
+#include <xmipp4/core/compute/device_queue_pool.hpp>
+
+#include <sstream>
 
 namespace xmipp4
 {
@@ -37,18 +32,29 @@ namespace compute
 
 namespace py = pybind11;
 
-void bind_compute(pybind11::module_ &m)
+void bind_device_queue_pool(pybind11::module_ &m)
 {
-    bind_device(m);
-    bind_device_event(m);
-    bind_device_index(m);
-    bind_device_manager(m);
-    bind_device_properties(m);
-    bind_device_queue(m);
-    bind_device_queue_pool(m);
-    bind_device_to_host_event(m);
-    bind_device_type(m);
+    py::class_<device_queue_pool>(m, "DeviceQueuePool")
+        .def_property_readonly(
+            "queues",
+            [](device_queue_pool &self) -> py::list
+            {
+                py::list queues;
+                const auto size = self.get_size();
+                for (std::size_t i = 0; i < size; ++i)
+                {
+                    auto queue = py::cast(
+                        self.get_queue(i), 
+                        py::return_value_policy::reference
+                    );
+                    queues.append(std::move(queue));
+                }
+                return queues;
+            },
+            py::return_value_policy::reference_internal
+        );
 }
 
 } // namespace compute
 } // namespace xmipp4
+  

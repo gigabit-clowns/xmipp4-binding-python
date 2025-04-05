@@ -18,17 +18,10 @@
  *  e-mail address 'xmipp@cnb.csic.es'
  ***************************************************************************/
 
-#include "main.hpp"
-
-#include "device.hpp"
-#include "device_event.hpp"
-#include "device_index.hpp"
-#include "device_manager.hpp"
-#include "device_properties.hpp"
-#include "device_queue.hpp"
-#include "device_queue_pool.hpp"
 #include "device_to_host_event.hpp"
-#include "device_type.hpp"
+
+#include <xmipp4/core/compute/device_to_host_event.hpp>
+#include <xmipp4/core/compute/device_queue.hpp>
 
 namespace xmipp4
 {
@@ -37,17 +30,12 @@ namespace compute
 
 namespace py = pybind11;
 
-void bind_compute(pybind11::module_ &m)
+void bind_device_to_host_event(pybind11::module_ &m)
 {
-    bind_device(m);
-    bind_device_event(m);
-    bind_device_index(m);
-    bind_device_manager(m);
-    bind_device_properties(m);
-    bind_device_queue(m);
-    bind_device_queue_pool(m);
-    bind_device_to_host_event(m);
-    bind_device_type(m);
+    py::class_<device_to_host_event, std::shared_ptr<device_to_host_event>>(m, "DeviceToHostEvent")
+        .def_property_readonly("is_signaled", &device_to_host_event::is_signaled)
+        .def("signal", &device_to_host_event::signal)
+        .def("wait", &device_to_host_event::wait);
 }
 
 } // namespace compute

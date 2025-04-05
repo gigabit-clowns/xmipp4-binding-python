@@ -18,17 +18,11 @@
  *  e-mail address 'xmipp@cnb.csic.es'
  ***************************************************************************/
 
-#include "main.hpp"
-
-#include "device.hpp"
-#include "device_event.hpp"
-#include "device_index.hpp"
-#include "device_manager.hpp"
-#include "device_properties.hpp"
 #include "device_queue.hpp"
-#include "device_queue_pool.hpp"
-#include "device_to_host_event.hpp"
-#include "device_type.hpp"
+
+#include <xmipp4/core/compute/device_queue.hpp>
+
+#include <sstream>
 
 namespace xmipp4
 {
@@ -37,17 +31,11 @@ namespace compute
 
 namespace py = pybind11;
 
-void bind_compute(pybind11::module_ &m)
+void bind_device_queue(pybind11::module_ &m)
 {
-    bind_device(m);
-    bind_device_event(m);
-    bind_device_index(m);
-    bind_device_manager(m);
-    bind_device_properties(m);
-    bind_device_queue(m);
-    bind_device_queue_pool(m);
-    bind_device_to_host_event(m);
-    bind_device_type(m);
+    py::class_<device_queue>(m, "DeviceQueue")
+        .def_property_readonly("is_idle", &device_queue::is_idle)
+        .def("wait_util_completed", &device_queue::wait_until_completed);
 }
 
 } // namespace compute
