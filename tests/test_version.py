@@ -26,7 +26,7 @@ import pytest
 
 import xmipp4
 
-def test_version_constructor():
+def test_constructor():
   v = xmipp4.Version(1234, 567, 890)
   assert (
     (
@@ -110,7 +110,7 @@ def test_version_to_string():
   v = xmipp4.Version(1234, 567, 890)
   assert str(v) == "1234.567.890"
 
-def test_version_pickle():
+def test_pickle():
   v = xmipp4.Version(1234, 567, 890)
   pickled = pickle.dumps(v)
   unpickled = pickle.loads(pickled)

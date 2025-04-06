@@ -22,10 +22,10 @@
 # ***************************************************************************
 import xmipp4
 
-def test_plugin_manager_constructor():
+def test_constructor():
   assert xmipp4.PluginManager() is not None
 
-def test_plugin_manager_discovers_plugins_without_plugins():
+def test_discovers_plugins_without_plugins():
   pm = xmipp4.PluginManager()
   pm.discover_plugins()
   assert pm.plugins == []
