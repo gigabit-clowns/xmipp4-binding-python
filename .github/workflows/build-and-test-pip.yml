@@ -29,3 +29,8 @@ jobs:
 
       - name: Install with pip
         run: pip install . -vvv
+      
+      - name: Run tests
+        run: |
+          chmod +x ./scripts/run-tests.sh
+          ./scripts/run-tests.sh
