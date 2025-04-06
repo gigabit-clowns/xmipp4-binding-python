@@ -23,7 +23,9 @@
 import xmipp4
 
 def test_version_constructor():
-    v = xmipp4.version(1234, 567, 890)
-    assert v.major == 1234
-    assert v.minor == 567
-    assert v.patch == 890
+  v = xmipp4.Version(1234, 567, 890)
+  assert (
+    (
+      v.major, v.minor, v.patch
+    ) == (1234, 567, 890)
+  )
