@@ -34,77 +34,101 @@ def test_constructor():
     ) == (1234, 567, 890)
   )
 
-def test_versions_are_equal():
-  v1 = xmipp4.Version(1, 2, 3)
-  v2 = xmipp4.Version(1, 2, 3)
-  assert v1 == v2
-
 @pytest.mark.parametrize(
-  "major, minor, patch",
+  "major, minor, patch, is_equal",
   [
-    pytest.param(0, 2, 3, id="Different major"),
-    pytest.param(1, 1, 3, id="Different minor"),
-    pytest.param(1, 2, 2, id="Different patch")
+    pytest.param(1, 2, 3, True, id="Equals"),
+    pytest.param(2, 2, 3, False, id="Different major"),
+    pytest.param(1, 1, 3, False, id="Different minor"),
+    pytest.param(1, 2, 2, False, id="Different patch")
   ],
 )
-def test_versions_are_not_equal(major, minor, patch):
+def test_versions_are_equal(major, minor, patch, is_equal):
   v1 = xmipp4.Version(major, minor, patch)
   v2 = xmipp4.Version(1, 2, 3)
-  assert v1 != v2
+  assert (v1 == v2) == is_equal
 
 @pytest.mark.parametrize(
-  "major, minor, patch",
+  "major, minor, patch, is_not_equal",
   [
-    pytest.param(0, 2, 3, id="Smaller major"),
-    pytest.param(1, 1, 3, id="Smaller minor"),
-    pytest.param(1, 2, 2, id="Smaller patch")
+    pytest.param(0, 2, 3, True, id="Different major"),
+    pytest.param(1, 1, 3, True, id="Different minor"),
+    pytest.param(1, 2, 2, True, id="Different patch"),
+    pytest.param(1, 2, 3, False, id="Equals")
   ],
 )
-def test_version_is_less(major, minor, patch):
+def test_versions_are_not_equal(major, minor, patch, is_not_equal):
   v1 = xmipp4.Version(major, minor, patch)
   v2 = xmipp4.Version(1, 2, 3)
-  assert v1 < v2
+  assert (v1 != v2) == is_not_equal
 
 @pytest.mark.parametrize(
-  "major, minor, patch",
+  "major, minor, patch, is_less",
   [
-    pytest.param(0, 2, 3, id="Smaller or equal major"),
-    pytest.param(1, 1, 3, id="Smaller or equal minor"),
-    pytest.param(1, 2, 2, id="Smaller or equal patch"),
-    pytest.param(1, 2, 3, id="Equals")
+    pytest.param(0, 2, 3, True, id="Smaller major"),
+    pytest.param(1, 1, 3, True, id="Smaller minor"),
+    pytest.param(1, 2, 2, True, id="Smaller patch"),
+    pytest.param(1, 2, 3, False, id="Equals"),
+    pytest.param(2, 2, 3, False, id="Bigger major"),
+    pytest.param(1, 3, 3, False, id="Bigger minor"),
+    pytest.param(1, 2, 4, False, id="Bigger patch")
   ],
 )
-def test_version_is_less_or_equal(major, minor, patch):
+def test_version_is_less(major, minor, patch, is_less):
   v1 = xmipp4.Version(major, minor, patch)
   v2 = xmipp4.Version(1, 2, 3)
-  assert v1 <= v2
+  assert (v1 < v2) == is_less
 
 @pytest.mark.parametrize(
-  "major, minor, patch",
+  "major, minor, patch, is_less_or_equal",
   [
-    pytest.param(2, 2, 3, id="Greater major"),
-    pytest.param(1, 3, 3, id="Greater minor"),
-    pytest.param(1, 2, 4, id="Greater patch")
+    pytest.param(0, 2, 3, True, id="Smaller major"),
+    pytest.param(1, 1, 3, True, id="Smaller minor"),
+    pytest.param(1, 2, 2, True, id="Smaller patch"),
+    pytest.param(1, 2, 3, True, id="Equals"),
+    pytest.param(2, 2, 3, False, id="Bigger major"),
+    pytest.param(1, 3, 3, False, id="Bigger minor"),
+    pytest.param(1, 2, 4, False, id="Bigger patch")
   ],
 )
-def test_version_is_greater(major, minor, patch):
+def test_version_is_less_or_equal(major, minor, patch, is_less_or_equal):
   v1 = xmipp4.Version(major, minor, patch)
   v2 = xmipp4.Version(1, 2, 3)
-  assert v1 > v2
+  assert (v1 <= v2) == is_less_or_equal
 
 @pytest.mark.parametrize(
-  "major, minor, patch",
+  "major, minor, patch, is_greater",
   [
-    pytest.param(2, 2, 3, id="Greater or equal major"),
-    pytest.param(1, 3, 3, id="Greater or equal minor"),
-    pytest.param(1, 2, 4, id="Greater or equal patch"),
-    pytest.param(1, 2, 3, id="Equals")
+    pytest.param(0, 2, 3, False, id="Smaller major"),
+    pytest.param(1, 1, 3, False, id="Smaller minor"),
+    pytest.param(1, 2, 2, False, id="Smaller patch"),
+    pytest.param(1, 2, 3, False, id="Equals"),
+    pytest.param(2, 2, 3, True, id="Bigger major"),
+    pytest.param(1, 3, 3, True, id="Bigger minor"),
+    pytest.param(1, 2, 4, True, id="Bigger patch")
   ],
 )
-def test_version_is_greater_or_equal(major, minor, patch):
+def test_version_is_greater(major, minor, patch, is_greater):
   v1 = xmipp4.Version(major, minor, patch)
   v2 = xmipp4.Version(1, 2, 3)
-  assert v1 >= v2
+  assert (v1 > v2) == is_greater
+
+@pytest.mark.parametrize(
+  "major, minor, patch, is_greater_or_equal",
+  [
+    pytest.param(0, 2, 3, False, id="Smaller major"),
+    pytest.param(1, 1, 3, False, id="Smaller minor"),
+    pytest.param(1, 2, 2, False, id="Smaller patch"),
+    pytest.param(1, 2, 3, True, id="Equals"),
+    pytest.param(2, 2, 3, True, id="Bigger major"),
+    pytest.param(1, 3, 3, True, id="Bigger minor"),
+    pytest.param(1, 2, 4, True, id="Bigger patch")
+  ],
+)
+def test_version_is_greater_or_equal(major, minor, patch, is_greater_or_equal):
+  v1 = xmipp4.Version(major, minor, patch)
+  v2 = xmipp4.Version(1, 2, 3)
+  assert (v1 >= v2) == is_greater_or_equal
 
 def test_version_to_string():
   v = xmipp4.Version(1234, 567, 890)
