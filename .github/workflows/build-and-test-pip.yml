@@ -28,7 +28,8 @@ jobs:
           pip install git+https://github.com/gigabit-clowns/xmipp4-core@main -vvv
 
       - name: Print
-        run: python -c "import sys; import os; print(os.listdir(os.path.join(sys.prefix, 'local', 'lib')))"
+        #run: python -c "import sys; import os; print(os.listdir(os.path.join(sys.prefix, 'local', 'lib')))"
+        run: find /usr -name libxmipp4.so
 
       - name: Install with pip
         run: pip install . -vvv
