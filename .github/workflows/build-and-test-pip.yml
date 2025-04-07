@@ -29,7 +29,7 @@ jobs:
 
       - name: Print
         #run: python -c "import sys; import os; print(os.listdir(os.path.join(sys.prefix, 'local', 'lib')))"
-        run: find /usr -name xmipp4
+        run: find /opt -name xmipp4
 
       - name: Install with pip
         run: pip install . -vvv
