@@ -30,6 +30,9 @@ jobs:
       - name: Install with pip
         run: pip install .[test] -vvv
       
+      - name: Import
+        run: python -c "import xmipp4; print(xmipp4.__version__)"
+      
       - name: Run tests
         if: runner.os != 'macOS'
         run: |
