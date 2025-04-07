@@ -47,8 +47,10 @@ file(GLOB_RECURSE INLINE_SOURCES ${PROJECT_SOURCE_DIR}/include/*.inl)
 # Create the shared library
 pybind11_add_module(_core SHARED ${SOURCES})
 set_target_properties(
-	_core PROPERTIES 
-	CXX_STANDARD 20
+	_core 
+	PROPERTIES 
+		CXX_STANDARD 20
+		INSTALL_RPATH "$ORIGIN/../../../"
 )
 target_compile_definitions(
 	_core
@@ -64,12 +66,6 @@ target_precompile_headers(
 target_link_libraries(
 	_core
 	PRIVATE xmipp4-core
-)
-set_target_properties(
-	_core 
-	PROPERTIES
-		INSTALL_RPATH "$ORIGIN"
-		INSTALL_RPATH_USE_LINK_PATH TRUE
 )
 if(MSVC)
 	target_compile_options(_core PRIVATE /W4 /WX)
