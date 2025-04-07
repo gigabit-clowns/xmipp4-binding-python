@@ -28,7 +28,7 @@ jobs:
           pip install git+https://github.com/gigabit-clowns/xmipp4-core@main -vvv
 
       - name: Install with pip
-        run: pip install . -vvv
+        run: pip install .[test] -vvv
       
       - name: Run tests
         run: |
