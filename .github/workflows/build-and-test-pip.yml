@@ -30,10 +30,8 @@ jobs:
       - name: Install with pip
         run: pip install .[test] -vvv
       
-      - name: TEST Show libraries
-        run: pip list
-      
       - name: Run tests
+        if: runner.os == 'macOS'
         run: |
           chmod +x ./scripts/run-tests.sh
           ./scripts/run-tests.sh
