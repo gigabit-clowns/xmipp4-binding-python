@@ -27,6 +27,7 @@ name = "xmipp4-binding-python"
 version = "0.1.0"
 authors = [
     { name = "Oier Lauzirika Zarrabeitia", email = "oierlauzi@bizkaia.eu" },
+    { name = "Martin Salinas", email = "ssalinasmartin@gmail.com" }
 ]
 description = "Python binding for the xmipp4 framework"
 classifiers = [
