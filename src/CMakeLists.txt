@@ -68,7 +68,7 @@ target_link_libraries(
 set_target_properties(
 	_core 
 	PROPERTIES
-		INSTALL_RPATH "$ORIGIN/../../../"
+		INSTALL_RPATH "$ORIGIN"
 		INSTALL_RPATH_USE_LINK_PATH TRUE
 )
 if(MSVC)
