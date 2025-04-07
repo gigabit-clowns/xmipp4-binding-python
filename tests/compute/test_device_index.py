@@ -20,6 +20,8 @@
 #  All comments concerning this program package may be sent to the
 #  e-mail address 'xmipp@cnb.csic.es'
 # ***************************************************************************
+import pickle
+
 import pytest
 
 import xmipp4
@@ -162,7 +164,23 @@ def test_device_index_to_string(backend, device_id):
   assert (
     str(
       xmipp4.compute.DeviceIndex(backend, device_id)
-    ) == f"DeviceIndex(backend={backend}, id={device_id})"
+    ) == f"{backend}:{device_id}"
+  )
+
+@pytest.mark.parametrize(
+  "backend, device_id",
+  [
+    pytest.param("host", 0),
+    pytest.param("host", 1),
+    pytest.param("cuda", 0),
+    pytest.param("cuda", 1)
+  ]
+)
+def test_device_index_repr(backend, device_id):
+  assert (
+    repr(
+      xmipp4.compute.DeviceIndex(backend, device_id)
+    ) == f"DeviceIndex(backend=\"{backend}\", id={device_id})"
   )
 
 def test_pickle():
