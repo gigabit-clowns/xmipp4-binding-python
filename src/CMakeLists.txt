@@ -38,6 +38,9 @@ if (NOT TARGET xmipp4-core)
 	find_package(xmipp4-core REQUIRED)
 endif()
 
+# Require Python
+find_package(Python COMPONENTS Interpreter Development REQUIRED)
+
 # Register all source and header files
 file(GLOB_RECURSE SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp ${CMAKE_CURRENT_SOURCE_DIR}/*.c)
 file(GLOB_RECURSE HEADERS ${PROJECT_SOURCE_DIR}/include/*.h ${PROJECT_SOURCE_DIR}/include/*.hpp)
@@ -48,8 +51,8 @@ pybind11_add_module(_core ${SOURCES})
 set_target_properties(
 	_core 
 	PROPERTIES 
-	CXX_STANDARD 20
-		INSTALL_RPATH ${Python_LIBRARY_DIRS}
+		CXX_STANDARD 20
+		INSTALL_RPATH_USE_LINK_PATH ON
 )
 target_compile_definitions(
 	_core
@@ -87,5 +90,5 @@ add_custom_command(
 install(
 	TARGETS _core
 	LIBRARY 
-	DESTINATION ${Python_SITEARCH}/xmipp4
+	DESTINATION xmipp4
 )
