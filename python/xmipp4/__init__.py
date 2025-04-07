@@ -19,6 +19,9 @@
 # ***************************************************************************
 
 from __future__ import annotations
+from .load_core import load_core
+
+__core_so = load_core()
 
 from ._core import (
     __doc__, __version__, 
