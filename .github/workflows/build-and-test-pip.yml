@@ -30,6 +30,9 @@ jobs:
       - name: Install with pip
         run: pip install .[test] -vvv
       
+      - name: [TEST] Show libraries
+        run: pip list
+      
       - name: Run tests
         run: |
           chmod +x ./scripts/run-tests.sh
