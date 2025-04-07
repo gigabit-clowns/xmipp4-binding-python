@@ -39,7 +39,7 @@ def test_returns_default_devices(__setup_interface_registry):
   dm = xmipp4.compute.get_device_manager(
     __setup_interface_registry
   )
-  assert dm.backends == ['host']
+  assert dm.devices == [xmipp4.compute.DeviceIndex('host', 0)]
 
 @pytest.fixture
 def __setup_interface_registry():
