@@ -88,5 +88,5 @@ add_custom_command(
 install(
 	TARGETS _core
 	LIBRARY 
-	DESTINATION xmipp4
+	DESTINATION ${PYTHON_SITE_PACKAGES}/xmipp4
 )

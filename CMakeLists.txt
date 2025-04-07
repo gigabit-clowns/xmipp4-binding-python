@@ -59,5 +59,5 @@ endif()
 # Install python directory
 install(DIRECTORY
 	${CMAKE_CURRENT_SOURCE_DIR}/python/xmipp4/
-	DESTINATION xmipp4
+	DESTINATION ${PYTHON_SITE_PACKAGES}/xmipp4
 )
