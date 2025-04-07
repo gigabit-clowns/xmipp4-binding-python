@@ -26,6 +26,7 @@ include(FetchContent)
 include(GNUInstallDirs)
 
 # Find requirements
+find_package(Python COMPONENTS Interpreter Development REQUIRED)
 FetchContent_Declare(
 	pybind11
 	GIT_REPOSITORY https://github.com/pybind/pybind11
@@ -37,9 +38,6 @@ FetchContent_MakeAvailable(pybind11)
 if (NOT TARGET xmipp4-core)
 	find_package(xmipp4-core REQUIRED)
 endif()
-
-# Require Python
-find_package(Python COMPONENTS Interpreter Development REQUIRED)
 
 # Register all source and header files
 file(GLOB_RECURSE SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp ${CMAKE_CURRENT_SOURCE_DIR}/*.c)
