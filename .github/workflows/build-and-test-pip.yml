@@ -28,7 +28,7 @@ jobs:
           pip install git+https://github.com/gigabit-clowns/xmipp4-core@main -vvv
 
       - name: Print
-        run: ls python -c "import sys; print(sys.prefix)"
+        run: python -c "import sys; import os; print(os.listdir(sys.prefix))"
 
       - name: Install with pip
         run: pip install . -vvv
