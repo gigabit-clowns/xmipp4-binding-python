@@ -29,6 +29,9 @@ project(
 	LANGUAGES C CXX
 )
 
+# Require Python
+find_package(Python COMPONENTS Interpreter Development REQUIRED)
+
 # Include CTest to provide BUILD_TESTING option
 include(CTest)
 
@@ -59,5 +62,5 @@ endif()
 # Install python directory
 install(DIRECTORY
 	${CMAKE_CURRENT_SOURCE_DIR}/python/xmipp4/
-	DESTINATION ${PYTHON_SITE_PACKAGES}/xmipp4
+	DESTINATION ${Python_SITEARCH}/xmipp4
 )

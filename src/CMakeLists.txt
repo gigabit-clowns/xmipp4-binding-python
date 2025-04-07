@@ -26,7 +26,6 @@ include(FetchContent)
 include(GNUInstallDirs)
 
 # Find requirements
-find_package(Python COMPONENTS Interpreter Development REQUIRED)
 FetchContent_Declare(
 	pybind11
 	GIT_REPOSITORY https://github.com/pybind/pybind11
@@ -88,5 +87,5 @@ add_custom_command(
 install(
 	TARGETS _core
 	LIBRARY 
-	DESTINATION ${PYTHON_SITE_PACKAGES}/xmipp4
+	DESTINATION ${Python_SITEARCH}/xmipp4
 )
