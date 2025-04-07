@@ -51,7 +51,7 @@ readme = {file = "README.md", content-type = "text/markdown"}
 license = {file = "LICENSE"}
 
 requires-python = ">=3.7"
-dependencies = ["xmipp4-core==0.1.*"]
+dependencies = ["xmipp4-core==0.*"]
 
 [project.optional-dependencies]
 test = ["pytest>=8.3.5"]
