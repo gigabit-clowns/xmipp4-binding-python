@@ -14,8 +14,6 @@ jobs:
         - ubuntu-22.04
         - macos-latest
         - windows-latest
-        python-version:
-        - '3.10'
   
     runs-on: ${{ matrix.os }}
     defaults:
@@ -24,18 +22,13 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ matrix.python-version }}
 
       - name: Install xmipp4-core
         run: |
           pip install git+https://github.com/gigabit-clowns/xmipp4-core@main -vvv
 
       - name: Print
-        run: python -c "import sys; print(sys.prefix)"
+        run: ls python -c "import sys; print(sys.prefix)"
 
       - name: Install with pip
         run: pip install . -vvv
