@@ -30,7 +30,7 @@ jobs:
       - name: Install with pip
         run: pip install .[test] -vvv
       
-      - name: [TEST] Show libraries
+      - name: TEST Show libraries
         run: pip list
       
       - name: Run tests
