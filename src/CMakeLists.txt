@@ -49,8 +49,8 @@ pybind11_add_module(_core ${SOURCES})
 set_target_properties(
 	_core 
 	PROPERTIES 
-		CXX_STANDARD 20
-		INSTALL_RPATH "$ORIGIN/../../../"
+	CXX_STANDARD 20
+		INSTALL_RPATH_USE_LINK_PATH TRUE
 )
 target_compile_definitions(
 	_core
