@@ -65,6 +65,12 @@ target_link_libraries(
 	_core
 	PRIVATE xmipp4-core
 )
+set_target_properties(
+	_core 
+	PROPERTIES
+		INSTALL_RPATH "$ORIGIN"
+		INSTALL_RPATH_USE_LINK_PATH TRUE
+)
 if(MSVC)
 	target_compile_options(_core PRIVATE /W4 /WX)
 else()
