@@ -29,3 +29,6 @@ jobs:
 
       - name: Install with pip
         run: pip install --user . -vvv
+
+      - name: Import
+        run: python -c "import xmipp4; print(xmipp4.__version__)"
