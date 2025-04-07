@@ -50,7 +50,6 @@ set_target_properties(
 	_core 
 	PROPERTIES 
 		CXX_STANDARD 20
-		INSTALL_RPATH_USE_LINK_PATH ON
 )
 target_compile_definitions(
 	_core
