@@ -68,14 +68,14 @@ def test_are_not_equals(backend, id, are_not_equals):
   "backend, id, is_less",
   [
     pytest.param("host", 0, True, id="With smaller id"),
-    pytest.param("cuda", 0, True, id="With \"smaller\" backend & smaller id"),
-    pytest.param("cuda", 1, True, id="With \"smaller\" backend"),
-    pytest.param("cuda", 2, True, id="With \"smaller\" backend & bigger id"),
+    pytest.param("cuda", 0, True, id="With alphabetically smaller backend & smaller id"),
+    pytest.param("cuda", 1, True, id="With alphabetically smaller backend"),
+    pytest.param("cuda", 2, True, id="With alphabetically smaller backend & bigger id"),
     pytest.param("host", 1, False, id="Equals"),
     pytest.param("host", 2, False, id="With bigger id"),
-    pytest.param("metal", 1, False, id="With \"bigger\" backend"),
-    pytest.param("metal", 0, False, id="With \"bigger\" backend & smaller id"),
-    pytest.param("metal", 2, False, id="With \"bigger\" backend & bigger id")
+    pytest.param("metal", 1, False, id="With alphabetically bigger backend"),
+    pytest.param("metal", 0, False, id="With alphabetically bigger backend & smaller id"),
+    pytest.param("metal", 2, False, id="With alphabetically bigger backend & bigger id")
   ]
 )
 def test_is_less(backend, id, is_less):
@@ -84,14 +84,75 @@ def test_is_less(backend, id, is_less):
   assert (d1 < d2) == is_less
 
 @pytest.mark.parametrize(
-  "backend, id",
+  "backend, id, is_less_or_equal",
   [
-    pytest.param("host", 0, id="With host backend"),
-    pytest.param("host", 1, id="Equals"),
-    pytest.param("cuda", 0, id="With CUDA backend")
+    pytest.param("host", 0, True, id="With smaller id"),
+    pytest.param("cuda", 0, True, id="With alphabetically smaller backend & smaller id"),
+    pytest.param("cuda", 1, True, id="With alphabetically smaller backend"),
+    pytest.param("cuda", 2, True, id="With alphabetically smaller backend & bigger id"),
+    pytest.param("host", 1, True, id="Equals"),
+    pytest.param("host", 2, False, id="With bigger id"),
+    pytest.param("metal", 1, False, id="With alphabetically bigger backend"),
+    pytest.param("metal", 0, False, id="With alphabetically bigger backend & smaller id"),
+    pytest.param("metal", 2, False, id="With alphabetically bigger backend & bigger id")
   ]
 )
-def test_is_less_with_same_(backend, id):
+def test_is_less_or_equal(backend, id, is_less_or_equal):
   d1 = xmipp4.compute.DeviceIndex(backend, id)
   d2 = xmipp4.compute.DeviceIndex("host", 1)
-  assert d1 <= d2
+  assert (d1 <= d2) == is_less_or_equal
+
+@pytest.mark.parametrize(
+  "backend, id, is_greater",
+  [
+    pytest.param("host", 0, False, id="With smaller id"),
+    pytest.param("cuda", 0, False, id="With alphabetically smaller backend & smaller id"),
+    pytest.param("cuda", 1, False, id="With alphabetically smaller backend"),
+    pytest.param("cuda", 2, False, id="With alphabetically smaller backend & bigger id"),
+    pytest.param("host", 1, False, id="Equals"),
+    pytest.param("host", 2, True, id="With bigger id"),
+    pytest.param("metal", 1, True, id="With alphabetically bigger backend"),
+    pytest.param("metal", 0, True, id="With alphabetically bigger backend & smaller id"),
+    pytest.param("metal", 2, True, id="With alphabetically bigger backend & bigger id")
+  ]
+)
+def test_is_greater(backend, id, is_greater):
+  d1 = xmipp4.compute.DeviceIndex(backend, id)
+  d2 = xmipp4.compute.DeviceIndex("host", 1)
+  assert (d1 > d2) == is_greater
+
+@pytest.mark.parametrize(
+  "backend, id, is_greater_or_equal",
+  [
+    pytest.param("host", 0, False, id="With smaller id"),
+    pytest.param("cuda", 0, False, id="With alphabetically smaller backend & smaller id"),
+    pytest.param("cuda", 1, False, id="With alphabetically smaller backend"),
+    pytest.param("cuda", 2, False, id="With alphabetically smaller backend & bigger id"),
+    pytest.param("host", 1, True, id="Equals"),
+    pytest.param("host", 2, True, id="With bigger id"),
+    pytest.param("metal", 1, True, id="With alphabetically bigger backend"),
+    pytest.param("metal", 0, True, id="With alphabetically bigger backend & smaller id"),
+    pytest.param("metal", 2, True, id="With alphabetically bigger backend & bigger id")
+  ]
+)
+def test_is_greater_or_equal(backend, id, is_greater_or_equal):
+  d1 = xmipp4.compute.DeviceIndex(backend, id)
+  d2 = xmipp4.compute.DeviceIndex("host", 1)
+  assert (d1 >= d2) == is_greater_or_equal
+
+@pytest.mark.parametrize(
+  "backend, id",
+  [
+    pytest.param("host", 0),
+    pytest.param("host", 1),
+    pytest.param("cuda", 0),
+    pytest.param("cuda", 1)
+  ]
+)
+def test_device_index_to_string(backend, id):
+  assert (
+    str(
+      xmipp4.compute.DeviceIndex(backend, id)
+    ) == f"DeviceIndex(backend={backend}, id={id})"
+  )
+
