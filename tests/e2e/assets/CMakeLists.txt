@@ -20,39 +20,14 @@
 #  e-mail address 'xmipp@cnb.csic.es'
 # ***************************************************************************
 
-cmake_minimum_required(VERSION 3.16)
+add_subdirectory(dummy_plugin1)
+add_subdirectory(dummy_plugin2)
 
-# Define the project
-project(
-  xmipp4-binding-python
-	VERSION 0.1.0 
-	LANGUAGES C CXX
-)
-
-# Include CTest to provide BUILD_TESTING option
-include(CTest)
-
-# Declare build options
-#option(XMIPP4_BINDING_PYTHON_BUILD_DOC "Build documentation" ON)
-
-# Set the module path
-#list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
-
-# Add sources
-add_subdirectory(src)
-
-# Only build docs if it is the main project
-#if(BUILD_DOC)
-#	add_subdirectory(doc)
-#endif()
-
-# Only build tests if it is the main project
-if(BUILD_TESTING)
-	add_subdirectory(tests)
-endif()
-
-# Install python directory
-install(DIRECTORY
-	${CMAKE_CURRENT_SOURCE_DIR}/python/xmipp4/
-	DESTINATION xmipp4
+set(TARGET_NAME "${PROJECT_NAME}_e2e_test_assets")
+set(PLUGINS_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/plugins/)
+add_custom_target(
+    ${TARGET_NAME}
+    COMMAND ${CMAKE_COMMAND} -E make_directory ${PLUGINS_DIRECTORY}
+    COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:dummy_plugin1> ${PLUGINS_DIRECTORY}
+    COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:dummy_plugin2> ${PLUGINS_DIRECTORY}
 )
