@@ -25,11 +25,7 @@ jobs:
 
       - name: Install xmipp4-core
         run: |
-          pip install git+https://github.com/gigabit-clowns/xmipp4-core@main -vvv
-
-      - name: Print
-        #run: python -c "import sys; import os; print(os.listdir(os.path.join(sys.prefix, 'local', 'lib')))"
-        run: find /opt -name xmipp4
+          pip install --user git+https://github.com/gigabit-clowns/xmipp4-core@main -vvv
 
       - name: Install with pip
-        run: pip install . -vvv
+        run: pip install --user . -vvv
