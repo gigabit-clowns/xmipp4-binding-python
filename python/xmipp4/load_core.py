@@ -2,7 +2,7 @@ import ctypes
 import os
 import platform
 import sys
-from typing import List
+from typing import List, Generator
 
 def __get_library_filename(name: str, system: str) -> str:
     """Get the library filename based on the operating system."""
@@ -20,19 +20,19 @@ def __get_library_directory_names(system) -> List[str]:
     else: # Linux, MacOS, or other Unix-like systems
         return ["lib", "lib64"]
 
+def __iter_possible_library_paths(prefix: str, 
+                                  filename: str, 
+                                  system: str ) -> Generator[str]:
+    """Iterate over possible paths for the library."""
+    yield filename
+    for libdir in __get_library_directory_names(system):
+        yield os.path.join(prefix, libdir, filename)
+
 def __load_library(name: str) -> ctypes.CDLL:
     """Heuristically find and load a library with the specified name."""
     system = platform.system()
     filename = __get_library_filename(name, system)
-    possible_paths = [
-        filename,
-        *[
-            os.path.join(sys.prefix, lib_directory, filename)
-            for lib_directory in __get_library_directory_names(system)
-        ]
-    ]
-
-    for path in possible_paths:
+    for path in __iter_possible_library_paths(sys.prefix, filename, system):
         if os.path.exists(path):
             try:
                 return ctypes.CDLL(path)
