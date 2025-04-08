@@ -13,7 +13,6 @@ jobs:
         - ubuntu-latest
         - ubuntu-22.04
         - macos-latest
-        - windows-latest
         python-version:
         - '3.13'
   
@@ -33,7 +32,6 @@ jobs:
       - name: Create virtual environment
         run: |
           python -m venv env
-          ls env
 
       - name: Install xmipp4-core
         run: |
