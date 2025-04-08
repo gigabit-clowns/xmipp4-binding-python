@@ -24,22 +24,22 @@ def __load_library(name: str) -> ctypes.CDLL:
     """Heuristically find and load a library with the specified name."""
     system = platform.system()
     filename = __get_library_filename(name, system)
-    try:
-        return ctypes.CDLL(filename)
-    except OSError:
-        pass
+    possible_paths = [
+        filename,
+        *[
+            os.path.join(sys.prefix, lib_directory, filename)
+            for lib_directory in __get_library_directory_names(system)
+        ]
+    ]
 
-    prefix = sys.prefix
-    lib_directories = __get_library_directory_names(system)
-    for lib_directory in lib_directories:
-        path = os.path.join(prefix, lib_directory, filename)
+    for path in possible_paths:
         if os.path.exists(path):
             try:
                 return ctypes.CDLL(path)
             except OSError:
                 continue
     
-    raise OSError(f"Could not find {name}")
+    raise OSError(f"Could not find {name}.")
 
 def load_core() -> ctypes.CDLL:
     """
