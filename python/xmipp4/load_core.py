@@ -64,14 +64,11 @@ def __load_library(name: str) -> ctypes.CDLL:
     except OSError:
         pass
 
-    print(os.listdir(sysconfig.get_path("stdlib")))
-
     prefixes = __get_directory_prefixes()
     lib_directories = __get_library_directory_names()
     for prefix, lib_directory in itertools.product(prefixes, lib_directories):
         path = os.path.join(prefix, lib_directory, filename)
         if os.path.exists(path):
-            print(f"Trying to load {path}")
             try:
                 return ctypes.CDLL(path)
             except OSError:
