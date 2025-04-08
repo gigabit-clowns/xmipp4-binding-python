@@ -42,7 +42,7 @@ def __get_library_directory_names() -> List[str]:
     elif platform == Platform.MACOS:
         return ["lib"]
     elif platform == Platform.WINDOWS:
-        return ["Library"]
+        return [""]
 
 def __get_directory_prefixes() -> List[str]:
     """
