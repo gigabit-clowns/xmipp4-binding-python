@@ -16,25 +16,17 @@ jobs:
         - windows-latest
         python-version:
         - '3.13'
-        env-manager:
-        - none
-        - venv
         include:
         - os: macos-latest
           python-version: '3.8'
-          env-manager: none
         - os: macos-latest
           python-version: '3.9'
-          env-manager: none
         - os: macos-latest
           python-version: '3.10'
-          env-manager: none
         - os: macos-latest
           python-version: '3.11'
-          env-manager: none
         - os: macos-latest
           python-version: '3.12'
-          env-manager: none
   
     runs-on: ${{ matrix.os }}
     defaults:
@@ -48,12 +40,6 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
-      
-      - name: Create virtualenv environment
-        if: matrix.env-manager == 'venv'
-        run: |
-          python -m venv env
-          source env/bin/activate
 
       - name: Install xmipp4-core
         run: |
