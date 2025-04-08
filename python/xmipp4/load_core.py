@@ -1,59 +1,42 @@
-from typing import List, Set
-from enum import Enum
+from typing import List
 import os
 import sys
 import ctypes
+import platform
 
-class Platform(Enum):
-    LINUX = "linux"
-    MACOS = "macos"
-    WINDOWS = "windows"
-
-def __get_platform() -> Platform:
+def __get_library_filename(name: str, system: str) -> str:
     """
-    Get the platform type.
+    Get the library filename based on the operating system.
     """
-    if sys.platform.startswith("linux"):
-        return Platform.LINUX
-    elif sys.platform.startswith("darwin"):
-        return Platform.MACOS
-    elif sys.platform.startswith("win32"):
-        return Platform.WINDOWS
-    else:
-        raise RuntimeError(f"Unsupported platform: {sys.platform}")
-
-def __get_library_filename(name: str, platform: Platform) -> str:
-    if platform == Platform.LINUX:
-        return f"lib{name}.so"
-    elif platform == Platform.MACOS:
+    if system == 'Darwin':
         return f"lib{name}.dylib"
-    elif platform == Platform.WINDOWS:
+    elif system == 'Windows':
         return f"{name}.dll"
+    else:
+        return f"lib{name}.so"
 
-def __get_library_directory_names(platform: Platform) -> List[str]:
+def __get_library_directory_names(system) -> List[str]:
     """
-    Get the library directory names based on the platform.
+    Get the library directory names based on the operating system.
     """
-    if platform == Platform.LINUX:
-        return ["lib", "lib64"]
-    elif platform == Platform.MACOS:
-        return ["lib"]
-    elif platform == Platform.WINDOWS:
+    if system == 'Windows':
         return ["bin"]
+    else:
+        return ["lib", "lib64"]
 
 def __load_library(name: str) -> ctypes.CDLL:
     """
     Heuristically find and load a library with the specified name.
     """
-    platform = __get_platform()
-    filename = __get_library_filename(name, platform)
+    system = platform.system()
+    filename = __get_library_filename(name, system)
     try:
         return ctypes.CDLL(filename)
     except OSError:
         pass
 
     prefix = sys.prefix
-    lib_directories = __get_library_directory_names(platform)
+    lib_directories = __get_library_directory_names(system)
     for lib_directory in lib_directories:
         path = os.path.join(prefix, lib_directory, filename)
         if os.path.exists(path):
