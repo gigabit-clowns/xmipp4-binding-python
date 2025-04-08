@@ -1,31 +1,48 @@
 from typing import List
+from enum import Enum
 import os
 import sys
 import ctypes
 import itertools
 
-def __get_library_filename(name: str) -> str:
+class Platform(Enum):
+    LINUX = "linux"
+    MACOS = "macos"
+    WINDOWS = "windows"
+
+def __get_platform() -> Platform:
+    """
+    Get the platform type.
+    """
     if sys.platform.startswith("linux"):
-        return f"lib{name}.so"
+        return Platform.LINUX
     elif sys.platform.startswith("darwin"):
-        return f"lib{name}.dylib"
+        return Platform.MACOS
     elif sys.platform.startswith("win32"):
-        return f"{name}.dll"
+        return Platform.WINDOWS
     else:
         raise RuntimeError(f"Unsupported platform: {sys.platform}")
+
+def __get_library_filename(name: str) -> str:
+    platform = __get_platform()
+    if platform == Platform.LINUX:
+        return f"lib{name}.so"
+    elif platform == Platform.MACOS:
+        return f"lib{name}.dylib"
+    elif platform == Platform.WINDOWS:
+        return f"{name}.dll"
 
 def __get_library_directory_names() -> List[str]:
     """
     Get the library directory names based on the platform.
     """
-    if sys.platform.startswith("linux"):
+    platform = __get_platform()
+    if platform == Platform.LINUX:
         return ["lib", "lib64"]
-    elif sys.platform.startswith("darwin"):
+    elif platform == Platform.MACOS:
         return ["lib"]
-    elif sys.platform.startswith("win32"):
+    elif platform == Platform.WINDOWS:
         return ["Library"]
-    else:
-        raise RuntimeError(f"Unsupported platform: {sys.platform}")
 
 def __get_directory_prefixes() -> List[str]:
     """
