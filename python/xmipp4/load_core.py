@@ -22,7 +22,7 @@ def __get_library_directory_names(system) -> List[str]:
 
 def __iter_possible_library_paths(prefix: str, 
                                   filename: str, 
-                                  system: str ) -> Generator[str]:
+                                  system: str ) -> Generator[str, None, None]:
     """Iterate over possible paths for the library."""
     yield filename
     for libdir in __get_library_directory_names(system):
