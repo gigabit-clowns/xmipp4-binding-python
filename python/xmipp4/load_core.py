@@ -43,16 +43,13 @@ def __get_library_directory_names() -> List[str]:
     elif platform == Platform.MACOS:
         return ["lib"]
     elif platform == Platform.WINDOWS:
-        return ["Lib", "libs"]
+        return ["bin"]
 
-def __get_directory_prefixes() -> Set[str]:
+def __get_directory_prefixes() -> List[str]:
     """
-    Get the prefixes for the library search paths.
+    Get possible prefixes for the library search paths.
     """
-    return {
-        sys.prefix,
-        sysconfig.get_path("data"),   
-    }
+    return [sysconfig.get_path("data")]
 
 def __load_library(name: str) -> ctypes.CDLL:
     """
