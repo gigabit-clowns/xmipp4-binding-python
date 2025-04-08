@@ -35,9 +35,6 @@ jobs:
         - os: macos-latest
           python-version: '3.12'
           env-manager: none
-        exclude:
-        - os: windows-latest
-          env-manager: none
   
     runs-on: ${{ matrix.os }}
     defaults:
