@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Set
 from enum import Enum
 import os
 import sys
@@ -45,11 +45,14 @@ def __get_library_directory_names() -> List[str]:
     elif platform == Platform.WINDOWS:
         return ["Lib", "libs"]
 
-def __get_directory_prefixes() -> List[str]:
+def __get_directory_prefixes() -> Set[str]:
     """
     Get the prefixes for the library search paths.
     """
-    return [sys.prefix]
+    return {
+        sys.prefix,
+        sysconfig.get_path("data"),   
+    }
 
 def __load_library(name: str) -> ctypes.CDLL:
     """
