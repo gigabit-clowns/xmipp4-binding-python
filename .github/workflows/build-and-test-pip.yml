@@ -39,5 +39,4 @@ jobs:
 
       - name: Import
         run: |
-          python -m sysconfig
           python -c "import xmipp4; print(xmipp4.__version__)"
