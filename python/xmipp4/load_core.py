@@ -65,4 +65,4 @@ def load_core() -> ctypes.CDLL:
     Returns:
         ctypes.CDLL: The loaded core library.
     """
-    return __load_library("xmipp4")
+    return __load_library("xmipp4-core")
