@@ -1,13 +1,11 @@
-from typing import List
-import os
-import sys
 import ctypes
+import os
 import platform
+import sys
+from typing import List
 
 def __get_library_filename(name: str, system: str) -> str:
-    """
-    Get the library filename based on the operating system.
-    """
+    """Get the library filename based on the operating system."""
     if system == 'Darwin':
         return f"lib{name}.dylib"
     elif system == 'Windows':
@@ -16,18 +14,14 @@ def __get_library_filename(name: str, system: str) -> str:
         return f"lib{name}.so"
 
 def __get_library_directory_names(system) -> List[str]:
-    """
-    Get the library directory names based on the operating system.
-    """
+    """Get the library directory names based on the operating system."""
     if system == 'Windows':
         return ["bin"]
     else: # Linux, MacOS, or other Unix-like systems
         return ["lib", "lib64"]
 
 def __load_library(name: str) -> ctypes.CDLL:
-    """
-    Heuristically find and load a library with the specified name.
-    """
+    """Heuristically find and load a library with the specified name."""
     system = platform.system()
     filename = __get_library_filename(name, system)
     try:
