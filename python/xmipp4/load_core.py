@@ -1,6 +1,8 @@
+from typing import List
 import os
 import sys
 import ctypes
+import itertools
 
 def __get_library_filename(name: str) -> str:
     if sys.platform.startswith("linux"):
@@ -12,20 +14,55 @@ def __get_library_filename(name: str) -> str:
     else:
         raise RuntimeError(f"Unsupported platform: {sys.platform}")
 
+def __get_library_directory_names() -> List[str]:
+    """
+    Get the library directory names based on the platform.
+    """
+    if sys.platform.startswith("linux"):
+        return ["lib", "lib64"]
+    elif sys.platform.startswith("darwin"):
+        return ["lib"]
+    elif sys.platform.startswith("win32"):
+        return ["Library"]
+    else:
+        raise RuntimeError(f"Unsupported platform: {sys.platform}")
+
+def __get_directory_prefixes() -> List[str]:
+    """
+    Get the prefixes for the library search paths.
+    """
+    return [sys.prefix]
+
+def __load_library(name: str) -> ctypes.CDLL:
+    """
+    Heuristically find and load a library with the specified name.
+    """
+    filename = __get_library_filename(name)
+    try:
+        return ctypes.CDLL(filename)
+    except OSError:
+        pass
+
+    prefixes = __get_directory_prefixes()
+    lib_directories = __get_library_directory_names()
+    for prefix, lib_directory in itertools.product(prefixes, lib_directories):
+        path = os.path.join(prefix, lib_directory, filename)
+        if os.path.exists(path):
+            try:
+                return ctypes.CDLL(path)
+            except OSError:
+                continue
+    
+    raise OSError(f"Could not find {name}")
+
 def load_core() -> ctypes.CDLL:
     """
-    Load the core shared object of xmipp4.
+    Load the core library for xmipp4.
+    
+    This function attempts to load the xmipp4 shared object from the system's
+    library directories. It raises an exception if the library cannot be found.
+    
+    Returns:
+        ctypes.CDLL: The loaded core library.
     """
-    
-    paths = [
-        os.path.join(sys.prefix, "lib"),
-        os.path.join(sys.prefix, "lib64"),
-    ]
-    
-    filename = __get_library_filename("xmipp4-core")
-    for path in paths:
-        full_path = os.path.join(path, filename)
-        if os.path.exists(full_path):
-            return ctypes.CDLL(full_path)
-        
-    return ctypes.CDLL(filename)
+    return __load_library("xmipp4")
