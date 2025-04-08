@@ -12,7 +12,7 @@ def __get_library_filename(name: str, system: str) -> str:
         return f"lib{name}.dylib"
     elif system == 'Windows':
         return f"{name}.dll"
-    else:
+    else: # Linux or other Unix-like systems
         return f"lib{name}.so"
 
 def __get_library_directory_names(system) -> List[str]:
@@ -21,7 +21,7 @@ def __get_library_directory_names(system) -> List[str]:
     """
     if system == 'Windows':
         return ["bin"]
-    else:
+    else: # Linux, MacOS, or other Unix-like systems
         return ["lib", "lib64"]
 
 def __load_library(name: str) -> ctypes.CDLL:
