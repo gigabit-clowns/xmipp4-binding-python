@@ -60,6 +60,7 @@ def __load_library(name: str) -> ctypes.CDLL:
     except OSError:
         pass
 
+    print(os.listdir(sys.prefix))
     prefixes = __get_directory_prefixes()
     lib_directories = __get_library_directory_names()
     for prefix, lib_directory in itertools.product(prefixes, lib_directories):
