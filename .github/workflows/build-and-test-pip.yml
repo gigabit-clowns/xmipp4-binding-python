@@ -25,15 +25,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
       
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: ${{ matrix.python-version }}
-
-      #- name: Set up virtual-env
-      #  run: |
-      #    python -m venv venv
-      #    source venv/bin/activate
+      #- name: Set up Python
+      #  uses: actions/setup-python@v4
+      #  with:
+      #    python-version: ${{ matrix.python-version }}
 
       - name: Install xmipp4-core
         run: |
