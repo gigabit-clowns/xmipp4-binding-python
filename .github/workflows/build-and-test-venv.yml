@@ -33,6 +33,7 @@ jobs:
       - name: Create virtual environment
         run: |
           python -m venv env
+          ls env/bin
 
       - name: Install xmipp4-core
         run: |
