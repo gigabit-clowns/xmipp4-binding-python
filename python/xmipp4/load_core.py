@@ -26,18 +26,19 @@ def __iter_possible_library_paths(prefix: str,
     """Iterate over possible paths for the library."""
     yield filename
     for libdir in __get_library_directory_names(system):
-        yield os.path.join(prefix, libdir, filename)
+        path = os.path.join(prefix, libdir, filename)
+        if os.path.exists(path):
+            yield path
 
 def __load_library(name: str) -> ctypes.CDLL:
     """Heuristically find and load a library with the specified name."""
     system = platform.system()
     filename = __get_library_filename(name, system)
     for path in __iter_possible_library_paths(sys.prefix, filename, system):
-        if os.path.exists(path):
-            try:
-                return ctypes.CDLL(path)
-            except OSError:
-                continue
+        try:
+            return ctypes.CDLL(path)
+        except OSError:
+            continue
     
     raise OSError(f"Could not find {name}.")
 
