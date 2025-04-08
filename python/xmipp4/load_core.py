@@ -34,9 +34,9 @@ def __load_library(name: str) -> ctypes.CDLL:
     """Heuristically find and load a library with the specified name."""
     system = platform.system()
     filename = __get_library_filename(name, system)
-    for path in __iter_possible_library_paths(sys.prefix, filename, system):
+    for dynamic_lib in __iter_possible_library_paths(sys.prefix, filename, system):
         try:
-            return ctypes.CDLL(path)
+            return ctypes.CDLL(dynamic_lib)
         except OSError:
             continue
     
