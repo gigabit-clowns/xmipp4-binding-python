@@ -43,7 +43,7 @@ def __get_library_directory_names() -> List[str]:
     elif platform == Platform.MACOS:
         return ["lib"]
     elif platform == Platform.WINDOWS:
-        return [""]
+        return ["Lib", "libs"]
 
 def __get_directory_prefixes() -> List[str]:
     """
@@ -61,10 +61,6 @@ def __load_library(name: str) -> ctypes.CDLL:
     except OSError:
         pass
 
-    print(sysconfig.get_config_var('LIBDIR'))
-    print(os.listdir(sysconfig.get_config_var('LIBDIR')))
-    print(sys.prefix)
-    print(os.listdir(sys.prefix))
     prefixes = __get_directory_prefixes()
     lib_directories = __get_library_directory_names()
     for prefix, lib_directory in itertools.product(prefixes, lib_directories):
