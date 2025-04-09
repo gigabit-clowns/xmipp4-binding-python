@@ -40,7 +40,6 @@ endif()
 # Find Python
 find_package(Python COMPONENTS Interpreter Development REQUIRED)
 
-message("${Python_SITEARCH}")
 if(SKBUILD_PLATLIB_DIR)
 	set(PYTHON_INSTALL_DIR "${SKBUILD_PLATLIB_DIR}")
 else()
