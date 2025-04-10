@@ -28,21 +28,6 @@ import uuid
 
 import xmipp4
 
-def __get_dummy_plugin_directory() -> str:
-  prefix = sys.prefix
-  DUMMY_PLUGIN_DIRECTORY_NAME = 'xmipp4-dummy-plugins'
-  
-  if platform.system() == 'Windows':
-    return os.path.join(prefix, 'bin', DUMMY_PLUGIN_DIRECTORY_NAME)
-  elif os.path.exists(os.path.join(prefix, 'lib')):
-    return os.path.join(prefix, 'lib', DUMMY_PLUGIN_DIRECTORY_NAME)
-  elif os.path.exists(os.path.join(prefix, 'lib64')):
-    return os.path.join(prefix, 'lib64', DUMMY_PLUGIN_DIRECTORY_NAME)
-  else:
-    raise OSError("Could not find the dummy plugin directory.")
-
-
-
 def test_plugin_manager_constructor():
   assert xmipp4.PluginManager() is not None
 
@@ -72,3 +57,16 @@ def test_interface_catalog_registers_plugins_without_plugins():
   pm = xmipp4.PluginManager()
   n_plugins = ir.register_plugins(pm)
   assert n_plugins == 0
+
+def __get_dummy_plugin_directory() -> str:
+  prefix = sys.prefix
+  DUMMY_PLUGIN_DIRECTORY_NAME = 'xmipp4-dummy-plugins'
+  
+  if platform.system() == 'Windows':
+    return os.path.join(prefix, 'bin', DUMMY_PLUGIN_DIRECTORY_NAME)
+  elif os.path.exists(os.path.join(prefix, 'lib')):
+    return os.path.join(prefix, 'lib', DUMMY_PLUGIN_DIRECTORY_NAME)
+  elif os.path.exists(os.path.join(prefix, 'lib64')):
+    return os.path.join(prefix, 'lib64', DUMMY_PLUGIN_DIRECTORY_NAME)
+  else:
+    raise OSError("Could not find the dummy plugin directory.")
