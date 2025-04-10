@@ -52,6 +52,19 @@ def test_returns_expected_properties(backend, device_id):
 @pytest.mark.parametrize(
   "backend, device_id",
   [
+    pytest.param("host", "2", id="Passing a string as id"),
+    pytest.param(2, 1, id="Passing a number as backend"),
+    pytest.param(None, 1, id="Passing a none as backend"),
+    pytest.param("cuda", None, id="Passing a none as id"),
+  ]
+)
+def test_raises_type_error_with_invalid_arguments(backend, device_id):
+  with pytest.raises(TypeError):
+    xmipp4.compute.DeviceIndex(backend, device_id)
+    
+@pytest.mark.parametrize(
+  "backend, device_id",
+  [
     pytest.param("host", 0),
     pytest.param("host", 1),
     pytest.param("cuda", 0),
