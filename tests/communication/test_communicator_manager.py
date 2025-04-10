@@ -35,10 +35,10 @@ def test_always_returns_same_communicator_manager(__setup_interface_registry):
   assert cm1 is cm2
 
 def test_returns_default_backends(__setup_interface_registry):
-  dm = xmipp4.compute.get_device_manager(
+  cm = xmipp4.communication.get_communicator_manager(
     __setup_interface_registry
   )
-  assert dm.backends == ['host']
+  assert cm.backends == ['dummy']
 
 @pytest.fixture
 def __setup_interface_registry():
