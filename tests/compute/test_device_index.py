@@ -50,6 +50,38 @@ def test_returns_expected_properties(backend, device_id):
   )
 
 @pytest.mark.parametrize(
+  "backend, device_id",
+  [
+    pytest.param("host", 0),
+    pytest.param("host", 1),
+    pytest.param("cuda", 0),
+    pytest.param("cuda", 1)
+  ]
+)
+def test_returns_expected_properties_from_string(backend, device_id):
+  device_index = xmipp4.compute.DeviceIndex(f"{backend}:{device_id}")
+  assert (
+    (
+      device_index.backend, device_index.id
+    ) == (backend, device_id)
+  )
+
+@pytest.mark.parametrize(
+  "name",
+  [
+    pytest.param("", id="Empty string"),
+    pytest.param("cuda:something", id="Invalid id"),
+    pytest.param(":2", id="Empty backend"),
+    pytest.param("host:", id="Empty id"),
+    pytest.param("host::2", id="Duplicated separators right side"),
+    pytest.param(":host:2", id="Duplicated separators left side")
+  ]
+)
+def test_raises_value_error_with_invalid_string(name):
+  with pytest.raises(ValueError):
+    xmipp4.compute.DeviceIndex(name)
+
+@pytest.mark.parametrize(
   "backend, device_id, are_equals",
   [
     pytest.param("host", 0, False, id="With different backend"),
