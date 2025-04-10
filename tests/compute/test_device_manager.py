@@ -1,5 +1,6 @@
 #***************************************************************************
 # Authors:     Oier Lauzirika Zarrabeitia (oierlauzi@bizkaia.eu)
+#              Martín Salinas Antón (ssalinasmartin@gmail.com)
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,5 +20,32 @@
 #  All comments concerning this program package may be sent to the
 #  e-mail address 'xmipp@cnb.csic.es'
 # ***************************************************************************
+import pytest
 
-add_subdirectory(assets)
+import xmipp4
+
+def test_returns_device_manager(__setup_interface_registry):
+  assert xmipp4.compute.get_device_manager(
+    __setup_interface_registry
+  ) is not None
+
+def test_always_returns_same_device_manager(__setup_interface_registry):
+  dm1 = xmipp4.compute.get_device_manager(__setup_interface_registry)
+  dm2 = xmipp4.compute.get_device_manager(__setup_interface_registry)
+  assert dm1 is dm2
+
+def test_returns_default_backends(__setup_interface_registry):
+  dm = xmipp4.compute.get_device_manager(
+    __setup_interface_registry
+  )
+  assert dm.backends == ['host']
+
+def test_returns_default_devices(__setup_interface_registry):
+  dm = xmipp4.compute.get_device_manager(
+    __setup_interface_registry
+  )
+  assert dm.devices == [xmipp4.compute.DeviceIndex('host', 0)]
+
+@pytest.fixture
+def __setup_interface_registry():
+  return xmipp4.InterfaceRegistry()
