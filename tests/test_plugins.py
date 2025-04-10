@@ -20,9 +20,28 @@
 #  All comments concerning this program package may be sent to the
 #  e-mail address 'xmipp@cnb.csic.es'
 # ***************************************************************************
+
+import os
+import platform
+import sys
 import uuid
 
 import xmipp4
+
+def __get_dummy_plugin_directory() -> str:
+  prefix = sys.prefix
+  DUMMY_PLUGIN_DIRECTORY_BASENAME = 'xmipp4-dummy-plugins'
+  
+  if platform.system() == 'Windows':
+    return os.path.join(prefix, 'bin', DUMMY_PLUGIN_DIRECTORY_BASENAME)
+  elif os.path.exists(os.path.join(prefix, 'lib')):
+    return os.path.join(prefix, 'lib', DUMMY_PLUGIN_DIRECTORY_BASENAME)
+  elif os.path.exists(os.path.join(prefix, 'lib64')):
+    return os.path.join(prefix, 'lib64', DUMMY_PLUGIN_DIRECTORY_BASENAME)
+  else:
+    raise OSError("Could not find the dummy plugin directory.")
+
+
 
 def test_plugin_manager_constructor():
   assert xmipp4.PluginManager() is not None
@@ -31,10 +50,19 @@ def test_plugin_manager_is_initialized_without_plugins():
   pm = xmipp4.PluginManager()
   assert pm.plugins == []
   
-def test_plugin_manager_discovers_plugins_without_plugins():
+def test_plugin_manager_discovers_no_plugins_in_an_empty_directory():
   pm = xmipp4.PluginManager()
   pm.discover_plugins(f'/path/to/invalid/directory/{uuid.uuid4()}/')
   assert pm.plugins == []
+  
+def test_plugin_manager_discovers_plugins():
+  pm = xmipp4.PluginManager()
+  pm.discover_plugins(__get_dummy_plugin_directory())
+  plugins = set(map(repr, pm.plugins))
+  plugins == {
+    'Plugin(name="dummy-plugin1", version="1.2.3")',
+    'Plugin(name="dummy-plugin2", version="4.5.6")',
+  }
 
 def test_interface_catalog_constructor():
   assert xmipp4.InterfaceCatalog() is not None
