@@ -20,14 +20,20 @@
 #  All comments concerning this program package may be sent to the
 #  e-mail address 'xmipp@cnb.csic.es'
 # ***************************************************************************
+import uuid
+
 import xmipp4
 
 def test_plugin_manager_constructor():
   assert xmipp4.PluginManager() is not None
 
+def test_plugin_manager_is_initialized_without_plugins():
+  pm = xmipp4.PluginManager()
+  assert pm.plugins == []
+  
 def test_plugin_manager_discovers_plugins_without_plugins():
   pm = xmipp4.PluginManager()
-  pm.discover_plugins()
+  pm.discover_plugins(f'/path/to/invalid/directory/{uuid.uuid4()}/')
   assert pm.plugins == []
 
 def test_interface_registry_constructor():
