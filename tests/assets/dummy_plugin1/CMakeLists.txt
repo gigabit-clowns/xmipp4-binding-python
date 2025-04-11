@@ -22,6 +22,8 @@
 
 cmake_minimum_required(VERSION 3.16)
 
+include(GNUInstallDirs)
+
 set(TARGET_NAME dummy_plugin1)
 set(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/plugin.cpp)
 add_library(${TARGET_NAME} MODULE ${SOURCES})
@@ -36,6 +38,7 @@ target_link_libraries(
 	PRIVATE
 		xmipp4-core
 )
+message("----------- Libdir: ${CMAKE_INSTALL_LIBDIR}")
 install(
 	TARGETS ${TARGET_NAME}
 	LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}/xmipp4-dummy-plugins/
