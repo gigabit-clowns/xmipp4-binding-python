@@ -37,7 +37,7 @@ jobs:
         run: |
           git clone https://github.com/gigabit-clowns/xmipp4-core.git
           cd xmipp4-core
-          git checkout ms_bin_in_tag
+          git checkout tags/development
           pip install --no-index --find-links=dist dist/*
 
       - name: Configure and build with CMake
