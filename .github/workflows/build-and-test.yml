@@ -40,6 +40,9 @@ jobs:
           git checkout tags/development
           pip install --no-index --find-links=dist xmipp4-core
 
+      - name: List
+        run: ls $(python -c "import sys; print(sys.prefix)")
+
       - name: Configure and build with CMake
         uses: threeal/cmake-action@v2
         with:
@@ -49,7 +52,6 @@ jobs:
           cxx-compiler: ${{ matrix.compiler.cxx }}
           options: |
             CMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}
-            CMAKE_PREFIX_PATH=$(python -c "import sys; print(sys.prefix)")
           run-build: true
           build-args: --config ${{ env.BUILD_TYPE }}
 
