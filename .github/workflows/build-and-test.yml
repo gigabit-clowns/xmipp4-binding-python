@@ -96,11 +96,9 @@ jobs:
           git checkout tags/development
 
       - name: Install with pip
-        if: false
         run: pip install .[test] -v -Ccmake.define.BUILD_TESTING=ON --find-links=${{ github.workspace }}/../xmipp4-core/dist
       
       - name: Run tests
-        if: false
         run: |
           chmod +x ./scripts/run-tests.sh
           ./scripts/run-tests.sh
