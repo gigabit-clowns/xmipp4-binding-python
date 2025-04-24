@@ -46,10 +46,6 @@ jobs:
           git checkout tags/development
           pip install --no-index --find-links=dist xmipp4-core
 
-      - name: Find
-        run: |
-          find $(python -c "import sys; print(sys.prefix)") -name "*xmipp4-core*"
-
       - name: Configure and build with CMake
         uses: threeal/cmake-action@v2
         with:
