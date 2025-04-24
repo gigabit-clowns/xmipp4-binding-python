@@ -48,6 +48,10 @@ jobs:
           pip install --no-index --find-links=dist xmipp4-core
           export XMIPP4_CORE_ROOT=$(python -c "import sys; print(sys.prefix)")
           echo "xmipp4_core_root=$XMIPP4_CORE_ROOT" >> $GITHUB_OUTPUT
+      
+      - name: Ugly
+        if: ${{ matrix.os == 'ubuntu-latest' }}
+        run: mv /opt/hostedtoolcache/Python/3.13.3/x64/lib64 /opt/hostedtoolcache/Python/3.13.3/x64/lib
 
       - name: Configure and build with CMake
         uses: threeal/cmake-action@v2
