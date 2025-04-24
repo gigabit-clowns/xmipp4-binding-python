@@ -59,6 +59,7 @@ jobs:
           cxx-compiler: ${{ matrix.compiler.cxx }}
           options: |
             CMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}
+            CMAKE_PREFIX_PATH="$(python -c \"import sys; print(sys.prefix)\")"
           run-build: true
           build-args: --config ${{ env.BUILD_TYPE }}
 
