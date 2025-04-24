@@ -63,7 +63,6 @@ jobs:
           options: |
             CMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}
             CMAKE_PREFIX_PATH=${{ steps.install_xmipp4_core.outputs.xmipp4_core_root }}
-            FIND_LIBRARY_USE_LIB64_PATHS=TRUE
           run-build: true
           build-args: --config ${{ env.BUILD_TYPE }}
 
