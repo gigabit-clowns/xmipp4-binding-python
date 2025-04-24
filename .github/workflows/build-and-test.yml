@@ -39,12 +39,15 @@ jobs:
           python-version: '3.13'
 
       - name: Install xmipp4-core
+        id: install_xmipp4_core
         working-directory: ${{ github.workspace }}/../
         run: |
           git clone https://github.com/gigabit-clowns/xmipp4-core.git
           cd xmipp4-core
           git checkout tags/development
           pip install --no-index --find-links=dist xmipp4-core
+          export XMIPP4_CORE_ROOT=$(python -c "import sys; print(sys.prefix)")
+          echo "xmipp4_core_root=$XMIPP4_CORE_ROOT" >> $GITHUB_OUTPUT
 
       - name: Configure and build with CMake
         uses: threeal/cmake-action@v2
@@ -55,7 +58,7 @@ jobs:
           cxx-compiler: ${{ matrix.compiler.cxx }}
           options: |
             CMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}
-            CMAKE_PREFIX_PATH="$(python -c \"import sys; print(sys.prefix)\")"
+            CMAKE_PREFIX_PATH=${{ install_xmipp4_core.outputs.xmipp4_core_root }}
           run-build: true
           build-args: --config ${{ env.BUILD_TYPE }}
 
