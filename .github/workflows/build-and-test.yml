@@ -32,6 +32,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
       
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
       - name: Install xmipp4-core
         working-directory: ${{ github.workspace }}/../
         run: |
@@ -42,7 +48,6 @@ jobs:
 
       - name: Find
         run: |
-          pip install directory_tree
           find $(python -c "import sys; print(sys.prefix)") -name "*xmipp4-core*"
 
       - name: Configure and build with CMake
