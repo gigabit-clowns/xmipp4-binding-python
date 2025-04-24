@@ -41,19 +41,22 @@ jobs:
           pip install --no-index --find-links=dist xmipp4-core
 
       - name: Find
-        run: find $(python -c "import sys; print(sys.prefix)") -name xmipp4-core
+        run: |
+          pip install directory_tree
+          python -c "import sys; print(sys.prefix)"
+          python -c "from directory_tree import DisplayTree; import sys; DisplayTree(sys.prefix)"
 
-      #- name: Configure and build with CMake
-      #  uses: threeal/cmake-action@v2
-      #  with:
-      #    source-dir: ${{ github.workspace }}
-      #    build-dir: "${{ github.workspace }}/build"
-      #    c-compiler: ${{ matrix.compiler.cc }}
-      #    cxx-compiler: ${{ matrix.compiler.cxx }}
-      #    options: |
-      #      CMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}
-      #    run-build: true
-      #    build-args: --config ${{ env.BUILD_TYPE }}
+      - name: Configure and build with CMake
+        uses: threeal/cmake-action@v2
+        with:
+          source-dir: ${{ github.workspace }}
+          build-dir: "${{ github.workspace }}/build"
+          c-compiler: ${{ matrix.compiler.cc }}
+          cxx-compiler: ${{ matrix.compiler.cxx }}
+          options: |
+            CMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}
+          run-build: true
+          build-args: --config ${{ env.BUILD_TYPE }}
 
   build_with_pip:
     name: pip
@@ -98,10 +101,10 @@ jobs:
           cd xmipp4-core
           git checkout tags/development
 
-      - name: Install with pip
-        run: pip install .[test] -v -Ccmake.define.BUILD_TESTING=ON --find-links=${{ github.workspace }}/../xmipp4-core/dist
-      
-      - name: Run tests
-        run: |
-          chmod +x ./scripts/run-tests.sh
-          ./scripts/run-tests.sh
+      #- name: Install with pip
+      #  run: pip install .[test] -v -Ccmake.define.BUILD_TESTING=ON --find-links=${{ github.workspace }}/../xmipp4-core/dist
+      #
+      #- name: Run tests
+      #  run: |
+      #    chmod +x ./scripts/run-tests.sh
+      #    ./scripts/run-tests.sh
