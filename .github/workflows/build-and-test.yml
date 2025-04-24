@@ -43,8 +43,7 @@ jobs:
       - name: Find
         run: |
           pip install directory_tree
-          python -c "import sys; print(sys.prefix)"
-          python -c "from directory_tree import DisplayTree; import sys; import os; DisplayTree(os.path.join(sys.prefix, 'lib'))"
+          find $(python -c "import sys; print(sys.prefix)") -name "*xmipp4-core*"
 
       - name: Configure and build with CMake
         uses: threeal/cmake-action@v2
