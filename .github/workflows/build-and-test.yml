@@ -96,7 +96,7 @@ jobs:
           git checkout tags/development
       
       - name: Install with pip
-        run: pip install .[test] -v -Ccmake.define.BUILD_TESTING=ON -Ccmake.define._GLIBCXX_USE_CXX11_ABI=0 --find-links=${{ github.workspace }}/../xmipp4-core/dist
+        run: pip install .[test] -v -Ccmake.define.BUILD_TESTING=ON --find-links=${{ github.workspace }}/../xmipp4-core/dist
       
       - name: Run tests
         run: |
