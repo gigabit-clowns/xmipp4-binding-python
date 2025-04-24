@@ -95,10 +95,6 @@ jobs:
           cd xmipp4-core
           git checkout tags/development
       
-      - name: Strings
-        if: ${{ matrix.os == 'ubuntu-latest' }}
-        run: strings /opt/hostedtoolcache/Python/3.13.3/x64/lib/libxmipp4.so | grep get_plugin_directory
-
       - name: Install with pip
         run: pip install .[test] -v -Ccmake.define.BUILD_TESTING=ON -Ccmake.define._GLIBCXX_USE_CXX11_ABI=0 --find-links=${{ github.workspace }}/../xmipp4-core/dist
       
