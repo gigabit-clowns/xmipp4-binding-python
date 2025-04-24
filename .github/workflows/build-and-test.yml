@@ -94,11 +94,12 @@ jobs:
           git clone https://github.com/gigabit-clowns/xmipp4-core.git
           cd xmipp4-core
           git checkout tags/development
+          pip install --no-index --find-links=dist xmipp4-core
       
       - name: Install with pip
         env:
           CXXFLAGS: -D_GLIBCXX_USE_CXX11_ABI=0 # manylinux2014 is built without CXX11 ABI
-        run: pip install .[test] -v --find-links="${{ github.workspace }}/../xmipp4-core/dist" -Ccmake.define.BUILD_TESTING=ON
+        run: pip install .[test] -v -Ccmake.define.BUILD_TESTING=ON
       
       - name: Run tests
         run: |
