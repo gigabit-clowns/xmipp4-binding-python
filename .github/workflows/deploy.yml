@@ -69,7 +69,7 @@ jobs:
           git clone https://github.com/gigabit-clowns/xmipp4-core.git
           cd xmipp4-core
           git checkout tags/development
-          pipx install xmipp4-core
+          pipx install .
 
       - name: Build sdist
         run: pipx run build --sdist
