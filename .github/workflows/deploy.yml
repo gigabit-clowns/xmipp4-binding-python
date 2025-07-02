@@ -70,11 +70,14 @@ jobs:
           cd xmipp4-core
           git checkout tags/development
 
+      - name: Install build tool
+        run: pip install build
+
       - name: Build sdist
         env:
           PIP_NO_INDEX: "true"
           PIP_FIND_LINKS: "${{ github.workspace }}/../xmipp4-core/dist"
-        run: pipx run build --sdist
+        run: python -m build --sdist
 
       - uses: actions/upload-artifact@v4
         with:
