@@ -75,7 +75,6 @@ jobs:
 
       - name: Build sdist
         env:
-          PIP_NO_INDEX: "true"
           PIP_FIND_LINKS: "${{ github.workspace }}/../xmipp4-core/dist"
         run: python -m build --sdist
 
