@@ -69,10 +69,9 @@ jobs:
           git clone https://github.com/gigabit-clowns/xmipp4-core.git
           cd xmipp4-core
           git checkout tags/development
-          pipx run pip install --no-index --find-links=dist xmipp4-core
 
       - name: Build sdist
-        run: pipx run build --sdist
+        run: pipx run build --sdist --config-setting=--build-option="--pip-args=--no-index --find-links=../xmipp4-core/dist"
 
       - uses: actions/upload-artifact@v4
         with:
