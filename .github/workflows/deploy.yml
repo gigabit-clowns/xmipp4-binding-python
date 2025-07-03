@@ -9,16 +9,16 @@ on:
 
   workflow_dispatch:
 
-x-download-dev-dependency: &download-dev-dependency
-  name: Download xmipp4-core (dev dependency)
-  if: "!(github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v'))"
-  run: |
-    echo "Development build detected. Cloning local dependency..."
-    git clone https://github.com/gigabit-clowns/xmipp4-core.git ./local_deps/xmipp4-core
-    cd ./local_deps/xmipp4-core
-    git checkout tags/development
-
 jobs:
+  x-download-dev-dependency: &download-dev-dependency
+    name: Download xmipp4-core (dev dependency)
+    if: "!(github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v'))"
+    run: |
+      echo "Development build detected. Cloning local dependency..."
+      git clone https://github.com/gigabit-clowns/xmipp4-core.git ./local_deps/xmipp4-core
+      cd ./local_deps/xmipp4-core
+      git checkout tags/development
+      
   build_wheels:
     name: Build wheels for ${{ matrix.os }} (${{ matrix.architectures }})
     strategy:
