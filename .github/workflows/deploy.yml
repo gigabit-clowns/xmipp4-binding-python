@@ -9,6 +9,15 @@ on:
 
   workflow_dispatch:
 
+x-download-dev-dependency: &download-dev-dependency
+  name: Download xmipp4-core (dev dependency)
+  if: "!(github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v'))"
+  run: |
+    echo "Development build detected. Cloning local dependency..."
+    git clone https://github.com/gigabit-clowns/xmipp4-core.git ./local_deps/xmipp4-core
+    cd ./local_deps/xmipp4-core
+    git checkout tags/development
+
 jobs:
   build_wheels:
     name: Build wheels for ${{ matrix.os }} (${{ matrix.architectures }})
@@ -29,12 +38,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Download xmipp4-core binaries
-        if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags/v')
-        run: |
-          git clone https://github.com/gigabit-clowns/xmipp4-core.git ./local_deps/xmipp4-core
-          cd ./local_deps/xmipp4-core
-          git checkout tags/development
+      - *download-dev-dependency
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v3.0.0
@@ -63,20 +67,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Download xmipp4-core binaries
-        if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags/v')
-        working-directory: ${{ github.workspace }}/../
-        run: |
-          git clone https://github.com/gigabit-clowns/xmipp4-core.git
-          cd xmipp4-core
-          git checkout tags/development
+      - *download-dev-dependency
 
       - name: Install build tool
         run: pip install build
 
       - name: Build sdist
         env:
-          PIP_FIND_LINKS: "${{ github.workspace }}/../xmipp4-core/dist"
+          PIP_FIND_LINKS: "local_deps/xmipp4-core/dist"
         run: python -m build --sdist
 
       - uses: actions/upload-artifact@v4
