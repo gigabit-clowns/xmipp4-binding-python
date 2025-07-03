@@ -73,8 +73,8 @@ jobs:
         run: pip install build
 
       - name: Build sdist
-        env:
-          PIP_FIND_LINKS: "${{ github.workspace }}/../xmipp4-core/dist" # TODO: Remove when xmipp4-core is in Pypi
+        env: # TODO: Remove when xmipp4-core is in Pypi
+          PIP_FIND_LINKS: "${{ github.workspace }}/../xmipp4-core/dist"
         run: python -m build --sdist # TODO: Remove when xmipp4-core is in Pypi
         # run: pipx run build --sdist # TODO: Enable when xmipp4-core is in Pypi
 
