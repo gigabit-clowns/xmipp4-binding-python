@@ -63,6 +63,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Debug Condition Variables
+        run: |
+          echo "Current event name: ${{ github.event_name }}"
+          echo "Current ref: ${{ github.ref }}"
+          echo "---"
+          echo "Is event a 'push'? --> ${{ github.event_name == 'push' }}"
+          echo "Does ref start with 'refs/tags/v'? --> ${{ startsWith(github.ref, 'refs/tags/v') }}"
+          echo "---"
+          echo "Combined condition for a release build (is push AND is tag):"
+          echo "--> ${{ github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v') }}"
+          echo "---"
+          echo "Final condition for dev dependency download (NOT a release build):"
+          echo "--> ${{ !(github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')) }}"
+
       - name: Download xmipp4-core binaries
         if: "!(github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v'))"
         working-directory: ${{ github.workspace }}/../
