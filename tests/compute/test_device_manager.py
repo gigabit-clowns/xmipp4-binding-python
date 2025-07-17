@@ -18,13 +18,13 @@ def test_returns_default_backends(__setup_interface_catalog):
   dm = xmipp4.compute.get_device_manager(
     __setup_interface_catalog
   )
-  assert dm.backends == ['host']
+  assert dm.backends == ['cpu']
 
 def test_returns_default_devices(__setup_interface_catalog):
   dm = xmipp4.compute.get_device_manager(
     __setup_interface_catalog
   )
-  assert dm.devices == [xmipp4.compute.DeviceIndex('host', 0)]
+  assert dm.devices == [xmipp4.compute.DeviceIndex('cpu', 0)]
 
 @pytest.fixture
 def __setup_interface_catalog():

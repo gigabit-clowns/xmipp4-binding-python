@@ -18,7 +18,7 @@ def test_returns_device(__setup_device_manager):
     pytest.param(3, id='Three queues requested')
   ]
 )
-def test_returns_expected_queues_for_host(__setup_device_manager, n_queues):
+def test_returns_expected_queues_for_cpu(__setup_device_manager, n_queues):
   device = __setup_device_manager.create_device(
     xmipp4.compute.DeviceIndex('cpu', 0),
     desired_queue_count=n_queues
