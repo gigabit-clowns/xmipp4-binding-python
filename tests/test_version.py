@@ -20,6 +20,7 @@
 #  All comments concerning this program package may be sent to the
 #  e-mail address 'xmipp@cnb.csic.es'
 # ***************************************************************************
+
 import pickle
 
 import pytest
