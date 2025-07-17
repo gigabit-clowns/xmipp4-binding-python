@@ -18,14 +18,6 @@
  *  e-mail address 'xmipp@cnb.csic.es'
  ***************************************************************************/
 
-/**
- * @file plugin.cpp
- * @author Oier Lauzirika Zarrabeitia (oierlauzi@bizkaia.eu)
- * @brief Exports a dummy plugin
- * @date 2025-04-07
- * 
- */
-
 #include <xmipp4/core/plugin.hpp>
 #include <xmipp4/core/platform/dynamic_shared_object.h>
 
