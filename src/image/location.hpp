@@ -31,4 +31,3 @@ void bind_location(pybind11::module_ &m);
 
 } // namespace image
 } // namespace xmipp4
-
