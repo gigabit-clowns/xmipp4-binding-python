@@ -2,12 +2,12 @@
 
 #include "device_to_host_event.hpp"
 
-#include <xmipp4/core/compute/device_to_host_event.hpp>
-#include <xmipp4/core/compute/device_queue.hpp>
+#include <xmipp4/core/hardware/device_to_host_event.hpp>
+#include <xmipp4/core/hardware/device_queue.hpp>
 
 namespace xmipp4
 {
-namespace compute
+namespace hardware
 {
 
 namespace py = pybind11;
@@ -20,5 +20,5 @@ void bind_device_to_host_event(pybind11::module_ &m)
         .def("wait", &device_to_host_event::wait);
 }
 
-} // namespace compute
+} // namespace hardware
 } // namespace xmipp4

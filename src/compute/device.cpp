@@ -2,19 +2,19 @@
 
 #include "device.hpp"
 
-#include <xmipp4/core/compute/device.hpp>
-#include <xmipp4/core/compute/device_queue_pool.hpp>
-#include <xmipp4/core/compute/device_memory_allocator.hpp>
-#include <xmipp4/core/compute/host_memory_allocator.hpp>
-#include <xmipp4/core/compute/host_to_device_transfer.hpp>
-#include <xmipp4/core/compute/device_to_host_transfer.hpp>
-#include <xmipp4/core/compute/device_copy.hpp>
-#include <xmipp4/core/compute/device_event.hpp>
-#include <xmipp4/core/compute/device_to_host_event.hpp>
+#include <xmipp4/core/hardware/device.hpp>
+#include <xmipp4/core/hardware/device_queue_pool.hpp>
+#include <xmipp4/core/hardware/device_memory_allocator.hpp>
+#include <xmipp4/core/hardware/host_memory_allocator.hpp>
+#include <xmipp4/core/hardware/host_to_device_transfer.hpp>
+#include <xmipp4/core/hardware/device_to_host_transfer.hpp>
+#include <xmipp4/core/hardware/device_copy.hpp>
+#include <xmipp4/core/hardware/device_event.hpp>
+#include <xmipp4/core/hardware/device_to_host_event.hpp>
 
 namespace xmipp4
 {
-namespace compute
+namespace hardware
 {
 
 namespace py = pybind11;
@@ -65,5 +65,5 @@ void bind_device(pybind11::module_ &m)
 
 }
 
-} // namespace compute
+} // namespace hardware
 } // namespace xmipp4

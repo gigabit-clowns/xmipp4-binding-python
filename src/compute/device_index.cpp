@@ -2,7 +2,7 @@
 
 #include "device_index.hpp"
 
-#include <xmipp4/core/compute/device_index.hpp>
+#include <xmipp4/core/hardware/device_index.hpp>
 
 #include <pybind11/operators.h>
 
@@ -10,7 +10,7 @@
 
 namespace xmipp4
 {
-namespace compute
+namespace hardware
 {
 
 namespace py = pybind11;
@@ -79,5 +79,5 @@ void bind_device_index(pybind11::module_ &m)
 
 }
 
-} // namespace compute
+} // namespace hardware
 } // namespace xmipp4

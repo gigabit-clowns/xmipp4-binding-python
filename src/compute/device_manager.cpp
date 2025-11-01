@@ -2,17 +2,17 @@
 
 #include "device_manager.hpp"
 
-#include <xmipp4/core/compute/device_manager.hpp>
+#include <xmipp4/core/hardware/device_manager.hpp>
 
 #include <xmipp4/core/service_catalog.hpp>
-#include <xmipp4/core/compute/device_create_parameters.hpp>
-#include <xmipp4/core/compute/device.hpp>
+#include <xmipp4/core/hardware/device_create_parameters.hpp>
+#include <xmipp4/core/hardware/device.hpp>
 
 #include <pybind11/stl.h> // Required for std::vector binding
 
 namespace xmipp4
 {
-namespace compute
+namespace hardware
 {
 
 static device_manager& get_device_manager(service_catalog &catalog)
@@ -86,5 +86,5 @@ void bind_device_manager(pybind11::module_ &m)
 
 }
 
-} // namespace compute
+} // namespace hardware
 } // namespace xmipp4

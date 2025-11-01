@@ -28,8 +28,8 @@ PYBIND11_MODULE(_core_binding, m) {
 
     auto communication_module = m.def_submodule("communication");
     communication::bind_communication(communication_module);
-    auto compute_module = m.def_submodule("compute");
-    compute::bind_compute(compute_module);
+    auto compute_module = m.def_submodule("hardware");
+    hardware::bind_compute(compute_module);
     auto image_module = m.def_submodule("image");
     image::bind_image(image_module);
 

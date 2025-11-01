@@ -2,11 +2,11 @@
 
 #include "device_properties.hpp"
 
-#include <xmipp4/core/compute/device_properties.hpp>
+#include <xmipp4/core/hardware/device_properties.hpp>
 
 namespace xmipp4
 {
-namespace compute
+namespace hardware
 {
 
 namespace py = pybind11;
@@ -58,5 +58,5 @@ void bind_device_properties(pybind11::module_ &m)
 
 }
 
-} // namespace compute
+} // namespace hardware
 } // namespace xmipp4

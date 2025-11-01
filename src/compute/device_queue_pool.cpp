@@ -2,14 +2,14 @@
 
 #include "device_queue_pool.hpp"
 
-#include <xmipp4/core/compute/device_queue.hpp>
-#include <xmipp4/core/compute/device_queue_pool.hpp>
+#include <xmipp4/core/hardware/device_queue.hpp>
+#include <xmipp4/core/hardware/device_queue_pool.hpp>
 
 #include <sstream>
 
 namespace xmipp4
 {
-namespace compute
+namespace hardware
 {
 
 namespace py = pybind11;
@@ -39,6 +39,6 @@ void bind_device_queue_pool(pybind11::module_ &m)
         );
 }
 
-} // namespace compute
+} // namespace hardware
 } // namespace xmipp4
   

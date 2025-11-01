@@ -2,11 +2,11 @@
 
 #include "device_type.hpp"
 
-#include <xmipp4/core/compute/device_type.hpp>
+#include <xmipp4/core/hardware/device_type.hpp>
 
 namespace xmipp4
 {
-namespace compute
+namespace hardware
 {
 
 namespace py = pybind11;
@@ -28,5 +28,5 @@ void bind_device_type(pybind11::module_ &m)
 }
 
 
-} // namespace compute
+} // namespace hardware
 } // namespace xmipp4

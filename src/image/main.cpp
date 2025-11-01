@@ -16,5 +16,5 @@ void bind_image(pybind11::module_ &m)
     bind_location(m);
 }
 
-} // namespace compute
+} // namespace hardware
 } // namespace xmipp4
