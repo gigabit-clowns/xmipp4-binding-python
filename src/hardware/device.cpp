@@ -3,7 +3,6 @@
 #include "device.hpp"
 
 #include <xmipp4/core/hardware/device.hpp>
-#include <xmipp4/core/hardware/device_queue_pool.hpp>
 #include <xmipp4/core/hardware/device_memory_allocator.hpp>
 #include <xmipp4/core/hardware/host_memory_allocator.hpp>
 #include <xmipp4/core/hardware/host_to_device_transfer.hpp>
@@ -22,12 +21,6 @@ namespace py = pybind11;
 void bind_device(pybind11::module_ &m)
 {
     py::class_<device, std::shared_ptr<device>>(m, "Device")
-        .def(
-            "get_queue_pool",
-            &device::get_queue_pool,
-            py::return_value_policy::reference,
-            py::keep_alive<0, 1>()
-        )
         .def(
             "create_device_memory_allocator", 
             &device::create_device_memory_allocator,
