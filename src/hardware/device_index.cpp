@@ -37,7 +37,7 @@ static device_index from_string(const std::string &str)
 	{
 		std::ostringstream oss;
 		oss << "Invalid device_index syntax \"" << str << "\"\n"
-			<< "Expected syntax \"backend_name:device_id\" or \"backend_name\"";
+			<< R"(Expected syntax "backend_name:device_id" or "backend_name")";
 		throw std::invalid_argument(oss.str());
 	}
 	return result;
