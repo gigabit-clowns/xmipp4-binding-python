@@ -5,7 +5,6 @@
 #include <xmipp4/core/hardware/device_manager.hpp>
 
 #include <xmipp4/core/service_catalog.hpp>
-#include <xmipp4/core/hardware/device_create_parameters.hpp>
 #include <xmipp4/core/hardware/device.hpp>
 
 #include <pybind11/stl.h> // Required for std::vector binding
@@ -58,17 +57,10 @@ void bind_device_manager(pybind11::module_ &m)
         )
         .def(
             "create_device",
-            [] (device_manager &self,
-                const device_index& index,
-                const py::kwargs &kwargs ) -> std::shared_ptr<device>
+            [] (device_manager &self, const device_index& index) -> std::shared_ptr<device>
             {
                 std::shared_ptr<device> result;
-                device_create_parameters params;
-                if(kwargs.contains("desired_queue_count")) {
-                    params.set_desired_queue_count(kwargs["desired_queue_count"].cast<std::size_t>());
-                }
-
-                if(!(result = self.create_device(index, params))) {
+                if(!(result = self.create_device(index))) {
                     throw std::invalid_argument("Requested device does not exist.");
                 }
 
