@@ -14,9 +14,9 @@ namespace py = pybind11;
 
 void bind_device_event(pybind11::module_ &m)
 {
-    py::class_<device_event, std::shared_ptr<device_event>>(m, "DeviceEvent")
-        .def("signal", &device_event::signal)
-        .def("wait", &device_event::wait);
+	py::class_<device_event, std::shared_ptr<device_event>>(m, "DeviceEvent")
+		.def("signal", &device_event::signal)
+		.def("wait", &device_event::wait);
 }
 
 } // namespace hardware
