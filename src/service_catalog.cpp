@@ -13,7 +13,7 @@ namespace py = pybind11;
 
 void bind_service_catalog(pybind11::module_ &m)
 {
-    py::class_<service_catalog>(m, "InterfaceCatalog")
+    py::class_<service_catalog>(m, "ServiceCatalog")
         .def(py::init<bool>(), py::arg("register_builtin_backends") = true)
         .def(
             "register_plugins", 

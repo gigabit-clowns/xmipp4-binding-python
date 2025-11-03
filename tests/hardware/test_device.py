@@ -6,7 +6,7 @@ import xmipp4
 
 def test_returns_device(__setup_device_manager):
   assert __setup_device_manager.create_device(
-    xmipp4.compute.DeviceIndex('cpu', 0)
+    xmipp4.hardware.DeviceIndex('cpu', 0)
   ) is not None
 
 @pytest.mark.parametrize(
@@ -20,7 +20,7 @@ def test_returns_device(__setup_device_manager):
 )
 def test_returns_expected_queues_for_cpu(__setup_device_manager, n_queues):
   device = __setup_device_manager.create_device(
-    xmipp4.compute.DeviceIndex('cpu', 0),
+    xmipp4.hardware.DeviceIndex('cpu', 0),
     desired_queue_count=n_queues
   )
   queue_pool = device.get_queue_pool()
@@ -28,5 +28,5 @@ def test_returns_expected_queues_for_cpu(__setup_device_manager, n_queues):
 
 @pytest.fixture
 def __setup_device_manager():
-  ir = xmipp4.InterfaceCatalog()
-  return xmipp4.compute.get_device_manager(ir)
+  ir = xmipp4.ServiceCatalog()
+  return xmipp4.hardware.get_device_manager(ir)
