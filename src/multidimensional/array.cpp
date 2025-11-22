@@ -11,7 +11,7 @@ namespace multidimensional
 
 namespace py = pybind11;
 
-static std::size_t compute_count(ssize_t start, ssize_t stop, ssize_t step)
+static std::size_t compute_count(Py_ssize_t start, Py_ssize_t stop, Py_ssize_t step)
 {
 	if (stop == PY_SSIZE_T_MAX)
 	{
@@ -35,9 +35,9 @@ static std::size_t compute_count(ssize_t start, ssize_t stop, ssize_t step)
 static slice convert_slice(py::slice s)
 {
 	auto *handle = s.ptr();
-	ssize_t start;
-	ssize_t stop;
-	ssize_t step;
+	Py_ssize_t start;
+	Py_ssize_t stop;
+	Py_ssize_t step;
 	if (PySlice_Unpack(handle, &start, &stop, &step) < 0)
 	{
 		throw std::invalid_argument("Invalid slice");
