@@ -1,6 +1,7 @@
 
 #include "communication/main.hpp"
 #include "hardware/main.hpp"
+#include "multidimensional/main.hpp"
 
 #include "service_catalog.hpp"
 #include "plugin_manager.hpp"
@@ -29,6 +30,8 @@ PYBIND11_MODULE(_core_binding, m) {
 	communication::bind_communication(communication_module);
 	auto hardware_module = m.def_submodule("hardware");
 	hardware::bind_hardware(hardware_module);
+	auto multidimensional_module = m.def_submodule("multidimensional");
+	multidimensional::bind_multidimensional(multidimensional_module);
 
 	bind_service_catalog(m);
 	bind_plugin_manager(m);
