@@ -77,8 +77,6 @@ void bind_device(pybind11::module_ &m)
 			&device::create_device_to_host_event,
 			py::keep_alive<0, 1>()
 		);
-
-	m.def("launder", [](std::shared_ptr<device> x) { return x; });
 }
 
 } // namespace hardware
