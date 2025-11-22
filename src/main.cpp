@@ -27,8 +27,8 @@ PYBIND11_MODULE(_core_binding, m) {
 
 	auto communication_module = m.def_submodule("communication");
 	communication::bind_communication(communication_module);
-	auto compute_module = m.def_submodule("hardware");
-	hardware::bind_compute(compute_module);
+	auto hardware_module = m.def_submodule("hardware");
+	hardware::bind_hardware(hardware_module);
 
 	bind_service_catalog(m);
 	bind_plugin_manager(m);
